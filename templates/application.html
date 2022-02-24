@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css">
+		<title>CSV - Mapa de Caixa</title>
+		<link rel="shortcut icon" href="../static/imagem/csv-icon.png">
+
+	</head>
+
+<body>
+  {% include 'views/partials/_header_top.html' %}
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1>CSV - Mapa de Caixa</h1><br>
+
+        {% block content %}{% endblock %}
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!--<h5 class="modal-title" id="exampleModalLabel">Fechar</h5>-->
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Deseja Sair?</p>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+          <button type="button" class="btn btn-danger" onclick="close_window()">Sim</button>
+        </div>	
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <div class="container">
+    <blockquote class="blockquote">
+      <!-- <p class="form-group">Obs.:</p> -->
+      <h3>Obs.:</h3>
+      <footer class="blockquote-footer"><cite title="Source Title aa">Esta aplicação foi desenvolvida para manipular o arquivo CSV gerado em "/Menu/Retaguarda da Loja/Tesouraria/Mapa de Caixa" do ERP Innovaro.</cite></footer>
+      <footer class="blockquote-footer"><cite title="Source Title aa">Antes de gerar o arquivo CSV escolher o separador Virgula (,) e não o Ponto e Virgula (;).</cite></footer>
+    </blockquote>
+  </div>
+
+  <script src="../static/js/jquery-3.2.1.slim.min.js"></script>
+  <script src="../static/js/popper.min.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>	
+
+  <script>
+    function close_window() {
+      close();
+    }
+    </script>
+    
+  </body>
+</html>
