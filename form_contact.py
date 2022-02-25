@@ -6,6 +6,6 @@ csrf = CSRFProtect()
 
 class ContactForm(FlaskForm):
 
-    file = FileField()
+    file = FileField(validators=[DataRequired('Selecione o Arquivo CSV')])
     submit = SubmitField("EditarCSV")
 

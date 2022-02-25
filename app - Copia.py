@@ -36,8 +36,10 @@ def index():
 def contact():
     form = ContactForm()
     if form.validate_on_submit():     
+              # request.files
         print('-------------------------')
         print(request.form['file'])
+                # print(request.files)  
         # print(request.form['email'])
         # print(request.form['subject'])
         # print(request.form['message'])       
@@ -61,4 +63,17 @@ def contact():
 #     mail.send(msg)
 
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run(
+        debug=True, 
+        use_reloader=True, 
+        port=8000
+        )
+        
+    app.config.update(
+        SESSION_COOKIE_SECURE = False,
+        SESSION_COOKIE_HTTPONLY = True,
+        SESSION_COOKIE_SAMESITE = 'Lax',
+        SESSION_PERMANENT = True
+    )
+    # app.config["SESSION_PERMANENT"] = True
+    # app.run()

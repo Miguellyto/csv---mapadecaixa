@@ -3,20 +3,22 @@ import os
 from flask import Flask, render_template, request, redirect
 from form_contact import ContactForm, csrf
 
-# from app3 import filepath
+from app3 import filepath
 # filepath
+# import app3
+# app3.filepath
 
 app = Flask(__name__)
 
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
 # app.config["SESSION_PERMANENT"] = False
-# app.config["SESSION_COOKIE_SECURE"] = False
+app.config["SESSION_COOKIE_SECURE"] = False
 csrf.init_app(app)
 
-@app.route('/index')
-def index():
-    return render_template('views/home/index.html')
+# @app.route('/index')
+# def index():
+#     return render_template('views/home/index.html')
 
 @app.route('/', methods=['POST', 'GET'])
 def contact():
@@ -25,17 +27,16 @@ def contact():
         print('-------------------------')
         print(request.form['file'])    
         print('-------------------------')
-        # return redirect('/contact')    
-    return render_template('views/contacts/contact.html', form=form)
+        if form.validate()== True:
+            return "CSV Editado com Sucesso!"  
+        return render_template('views/contacts/contact.html', form = form)
+    return render_template('views/contacts/contact.html', form = form)
 
-# @app.route('/success')
-# def success():
-#     return render_template('views/contacts/contact.html')
 if __name__ == "__main__":
-    # app.run(debug = True)
-    app.debug = False
+    # app.run(debug=True, port=8000)
+    app.debug = True
     app.config.update(
-        SESSION_COOKIE_SECURE=True,
+        SESSION_COOKIE_SECURE=False,
         SESSION_COOKIE_HTTPONLY=True,
         SESSION_COOKIE_SAMESITE='Lax',
     )

@@ -3,13 +3,18 @@ import numpy as np
 import os
 from pathlib import Path
 from flask import request
+# VIRIFICAR A IMPORTAÇÃO ABAIXO:
+from app import ContactForm
 
 # Criando o DataFreme "mapadecaixa" e atribuindo o conteúdo do file "Movimentao geral - CSV.csv" a ele
 # filepath = input("Escolha o Arquivo CSV: ")
 # while not os.path.isfile(filepath):
 #     print("Error: Digite o endereço coreto...")
 
-filepath = input("Escolha o Arquivo CSV: ")
+ContactForm.file
+
+# filepath = input("Escolha o Arquivo CSV: ")
+filepath = file
 mapadecaixa = pd.read_csv(os.getcwd() + filepath, encoding='ANSI', sep=',', header=0, thousands = '.', decimal = ',', dtype = {'Valor':np.float64})
 # mapadecaixa = pd.read_csv(os.getcwd() + "\\Movimentação geral - CSV.csv", encoding='ANSI', sep=',', header=0, thousands = '.', decimal = ',', dtype = {'Valor':np.float64})
 
