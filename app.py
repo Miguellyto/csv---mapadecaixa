@@ -3,7 +3,7 @@ import os
 from flask import Flask, render_template, request, redirect
 from form_contact import ContactForm, csrf
 
-from app3 import filepath
+# from app3 import filepath
 # filepath
 # import app3
 # app3.filepath
@@ -23,7 +23,7 @@ csrf.init_app(app)
 @app.route('/', methods=['POST', 'GET'])
 def contact():
     form = ContactForm()
-    if form.validate_on_submit():     
+    if form.validate_on_submit(): 
         print('-------------------------')
         print(request.form['file'])    
         print('-------------------------')
