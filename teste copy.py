@@ -6,9 +6,8 @@ import numpy as np
 import os
 from pathlib import Path
 # import requests
-from  tkinter import*
 import tkinter as tk
-import tkinter.messagebox
+from  tkinter import*
 # from PIL import ImageTk, Image
 # import tkMessageBox
 from tkinter import filedialog
@@ -53,7 +52,7 @@ def UploadAction():
 janela = Tk()
 janela.iconphoto(False, tk.PhotoImage(file='C:\BKP DESKTOP\MAPA DE CAIXA\csv - mapadecaixa\static\imagem\csv-icon.png'))
 janela.title('CSV - Mapa de Caixa')
-janela.geometry('840x250')
+janela.geometry('840x200')
 # janela.configure(background='#dde')
 # --------------------------------------------------------------------------------------
 # Cria janela para menssagem
@@ -71,9 +70,32 @@ def enviar():
 
 button = Button(janela2, text='OK', command=lambda: [enviar(), janela2.destroy()])
 button.pack()
+# def salvar_filial():
+#     global filial
+#     filial = l1.get()
 
-def hello():
-    tkinter.messagebox.showinfo('CSV - Mapa de Caixa', 'CSV Editado com Sucesso!')
+# def validate(filial): # callback function
+#     # return filial.isalnum() #Somente alfanumérico
+#     return filial.isdigit()
+# janela2_valid = janela2.register(validate) # register 
+# # janela2_valid = janela2.register(salvar_filial) # register 
+
+# l1=tk.Label(janela2, text='Digite a Filial:')
+# l1.grid(row=1,column=1,padx=20,pady=20)
+# e1 = Entry(janela2, validate='key', validatecommand=(janela2_valid,'%S'))
+# e1.grid(row=1,column=2,padx=20)
+
+# botao = Button(janela2, bg = "yellow", fg = "red", text='OK', command='')
+# botao.grid(row=2,column=2,padx=20)
+# janela2.destroy()
+
+# def recuperar_filial():
+#     global filial
+#     lbl_filial['text'] = filial
+# lbl_filial = Label(janela2, text='filial: ')
+
+# botao = Button(janela2, bg = "yellow", fg = "red", text='OK', command=recuperar_filial)
+# botao.grid(row=2,column=3,padx=20)
 # --------------------------------------------------------------------------------------
 texto = Label(janela, text='Selecione o Arquivo CSV: Movimentação geral')
 texto.grid(column=1, row=0, padx=10, pady=10)
@@ -81,7 +103,7 @@ texto.grid(column=1, row=0, padx=10, pady=10)
 botao = Button(janela, bg = "yellow", fg = "red", text='Digite a Filial', command='')
 botao.grid(column=1, row=1, padx=10, pady=10)
 
-botao = Button(janela, bg = "yellow", fg = "red", text='Selecionar Arquivo...',  command=lambda: [UploadAction(), hello()])
+botao = Button(janela, bg = "yellow", fg = "red", text='Selecionar Arquivo...', command=UploadAction)
 botao.grid(column=1, row=2, padx=10, pady=10)
 
 texto = Label(janela, text='Obs.: Esta aplicação foi desenvolvida para manipular o arquivo CSV gerado em "/Menu/Retaguarda da Loja/Tesouraria/Mapa de Caixa" do ERP Innovaro.')
@@ -95,7 +117,44 @@ texto.grid(column=1, row=4, padx=10, pady=10)
 # botao = Button(janela, text='Editar CSV', command=csv_mapaDEcaixa)
 # botao.grid(column=1, row=1, padx=10, pady=10)
 
-texto_resultado = Label(janela, text="")
-texto_resultado.grid(column=1, row=5, padx=10, pady=10)
+texto_resultado = Label(janela, text="", bg = "yellow")
+texto_resultado.grid(column=1, row=4, padx=10, pady=10)
 
 janela.mainloop()
+
+# ----------------
+
+
+# from werkzeug import SharedDataMiddleware
+# app.add_url_rule('/uploads/<filename>', 'uploaded_file',
+#                  build_only=True)
+# app.wsgi_app = SharedDataMiddleware(app.wsgi_app, {
+#     '/uploads':  app.config['UPLOAD_FOLDER']
+# })
+
+# import pandas as pd
+# import numpy as np
+# import os
+# from nome_do_arquivo_SemExtensão import Nome_da_classe_nesse_arquivo ou variavel 
+# from app3 import * # importar tudo do código app3.py
+
+# from app3 import filepath
+
+# \\Movimentação geral - CSV.csv
+
+# mapadecaixa = pd.read_csv()
+
+# import sys
+# sys.path.append(mapadecaixa)
+
+# from app3 import mapadecaixa
+# print(mapadecaixa)
+
+# import app3
+# mapadecaixa()
+# print(app3.mapadecaixa)
+# return = app3.mapadecaixa
+
+# import app3 as mapadecaixa
+# print(mapadecaixa)
+
