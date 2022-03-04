@@ -39,38 +39,42 @@ def UploadAction():
 # def validate():
     # filial = input("Digite a Filial: ")
     # filial = entry.get()
-    filial = entry
+    filial = open(Entry)
 
     mapadecaixa['FILIAL'] = filial
 # Exportando o DataFrame para um file CSV
 # O Index false, remove a coluna de indice que o dataframe cria no inicio.
     mapadecaixa.to_csv('MapaCaixa.csv', index=False) 
 
-    texto_resultado['text'] = mapadecaixa
+    # texto_resultado['text'] = mapadecaixa
     # print(mapadecaixa)
 # csv_mapaDEcaixa()
 
 janela = Tk()
+janela.eval('tk::PlaceWindow %s center' % janela.winfo_toplevel())
 janela.iconphoto(False, tk.PhotoImage(file='C:\BKP DESKTOP\MAPA DE CAIXA\csv - mapadecaixa\static\imagem\csv-icon.png'))
 janela.title('CSV - Mapa de Caixa')
 janela.geometry('840x250')
 # janela.configure(background='#dde')
 # --------------------------------------------------------------------------------------
 # Cria janela para menssagem
-janela2 = Tk()
-janela2.geometry("280x100")  
-janela2.title("CSV - Mapa de Caixa") 
-mensagem = str
-entry = Entry(janela2, validatecommand=('%S'))
-entry.pack()
+def open():
+    janela2 = Tk()
+    janela2.eval('tk::PlaceWindow %s center' % janela2.winfo_toplevel())
+    janela2.geometry("280x100")  
+    janela2.title("CSV - Mapa de Caixa") 
+    entry = Entry(janela2, validatecommand=('%S'))
+    entry.pack()
 
-def enviar():
-    mensagem = str(entry.get())
+    def enviar():
+        # mensagem = str
+        mensagem = str(entry.get())
     # return mensagem.isdigit()
-    print(mensagem)
+        print(mensagem)
 
-button = Button(janela2, text='OK', command=lambda: [enviar(), janela2.destroy()])
-button.pack()
+    botao = Button(janela2, text='OK', command=lambda: [enviar(), janela2.destroy()])
+    botao.pack()
+    janela2.mainloop()
 
 def hello():
     tkinter.messagebox.showinfo('CSV - Mapa de Caixa', 'CSV Editado com Sucesso!')
@@ -78,7 +82,7 @@ def hello():
 texto = Label(janela, text='Selecione o Arquivo CSV: Movimentação geral')
 texto.grid(column=1, row=0, padx=10, pady=10)
 
-botao = Button(janela, bg = "yellow", fg = "red", text='Digite a Filial', command='')
+botao = Button(janela, bg = "yellow", fg = "red", text='Digite a Filial', command=open) 
 botao.grid(column=1, row=1, padx=10, pady=10)
 
 botao = Button(janela, bg = "yellow", fg = "red", text='Selecionar Arquivo...',  command=lambda: [UploadAction(), hello()])
@@ -95,7 +99,7 @@ texto.grid(column=1, row=4, padx=10, pady=10)
 # botao = Button(janela, text='Editar CSV', command=csv_mapaDEcaixa)
 # botao.grid(column=1, row=1, padx=10, pady=10)
 
-texto_resultado = Label(janela, text="")
-texto_resultado.grid(column=1, row=5, padx=10, pady=10)
+# texto_resultado = Label(janela, text="")
+# texto_resultado.grid(column=1, row=5, padx=10, pady=10)
 
 janela.mainloop()
