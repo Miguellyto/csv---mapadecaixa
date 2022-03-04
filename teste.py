@@ -52,7 +52,7 @@ def UploadAction():
 
 janela = Tk()
 janela.eval('tk::PlaceWindow %s center' % janela.winfo_toplevel())
-janela.iconphoto(False, tk.PhotoImage(file='C:\BKP DESKTOP\MAPA DE CAIXA\csv - mapadecaixa\static\imagem\csv-icon.png'))
+# janela.iconphoto(False, tk.PhotoImage(file='C:\BKP DESKTOP\MAPA DE CAIXA\csv - mapadecaixa\static\imagem\csv-icon.png'))
 janela.title('CSV - Mapa de Caixa')
 janela.geometry('840x250')
 # janela.configure(background='#dde')
