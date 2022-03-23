@@ -1,13 +1,13 @@
 from cgitb import text
 from distutils.command.upload import upload
-from click import argument, command
+# from click import argument, command
 import pandas as pd
 import numpy as np
 import os
 from pathlib import Path
 # import requests
 from  tkinter import*
-import tkinter as tk
+# import tkinter as tk
 import tkinter.messagebox
 # from PIL import ImageTk, Image
 # import tkMessageBox
@@ -39,7 +39,8 @@ def UploadAction():
 # def validate():
     # filial = input("Digite a Filial: ")
     # filial = entry.get()
-    filial = open(Entry)
+    # global filial
+    filial = en.get()
 
     mapadecaixa['FILIAL'] = filial
 # Exportando o DataFrame para um file CSV
@@ -51,33 +52,43 @@ def UploadAction():
 # csv_mapaDEcaixa()
 
 janela = Tk()
-janela.eval('tk::PlaceWindow %s center' % janela.winfo_toplevel())
+# janela.eval('tk::PlaceWindow %s center' % janela.winfo_toplevel()) #Abri a janela no centro da tela.
 # janela.iconphoto(False, tk.PhotoImage(file='C:\BKP DESKTOP\MAPA DE CAIXA\csv - mapadecaixa\static\imagem\csv-icon.png'))
 janela.title('CSV - Mapa de Caixa')
 janela.geometry('840x250')
 # janela.configure(background='#dde')
 # --------------------------------------------------------------------------------------
+# def nome():
+#     en = input('Digite a Filial')
+#     # en.pack()
+#     return nome
 # Cria janela para menssagem
 def open():
-    janela2 = Tk()
-    janela2.eval('tk::PlaceWindow %s center' % janela2.winfo_toplevel())
+    global en
+    janela2 = Toplevel()
+    # janela2.eval('tk::PlaceWindow %s center' % janela2.winfo_toplevel())
     janela2.geometry("280x100")  
     janela2.title("CSV - Mapa de Caixa") 
-    entry = Entry(janela2, validatecommand=('%S'))
-    entry.pack()
+    en = Entry(janela2, validatecommand=('%S'))
+    # en = int(Entry(janela2, validatecommand=('%S')))
+    en.pack()
+    en.get()
+
+    botao = Button(janela2, text='OK', command=lambda: [enviar()])
+    botao.pack()
 
     def enviar():
         # mensagem = str
-        mensagem = str(entry.get())
-    # return mensagem.isdigit()
-        print(mensagem)
-
-    botao = Button(janela2, text='OK', command=lambda: [enviar(), janela2.destroy()])
-    botao.pack()
-    janela2.mainloop()
+        # mensagem = str(en.get())
+        # return mensagem.isdigit()
+        # return en
+        # print(mensagem)
+        # fileial = en.get()
+        print(en.get())
+        # janela2.destroy()
 
 def hello():
-    tkinter.messagebox.showinfo('CSV - Mapa de Caixa', 'CSV Editado com Sucesso!')
+    tkinter.messagebox.showinfo('CSV - Mapa de Caixa', 'CSV Editado com Sucesso!')  
 # --------------------------------------------------------------------------------------
 texto = Label(janela, text='Selecione o Arquivo CSV: Movimentação geral')
 texto.grid(column=1, row=0, padx=10, pady=10)
