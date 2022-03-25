@@ -63,28 +63,32 @@ janela.geometry('840x250')
 #     # en.pack()
 #     return nome
 # Cria janela para menssagem
+def enviar():
+    # print(en.get())
+    en.delete(0,END)
+
 def open():
     global en
     janela2 = Toplevel()
     # janela2.eval('tk::PlaceWindow %s center' % janela2.winfo_toplevel())
     janela2.geometry("280x100")  
     janela2.title("CSV - Mapa de Caixa") 
-    en = Entry(janela2, validatecommand=('%S'))
+    en = Entry(janela2, )
     # en = int(Entry(janela2, validatecommand=('%S')))
     en.pack()
     en.get()
-
     botao = Button(janela2, text='OK', command=lambda: [enviar()])
     botao.pack()
 
-    def enviar():
+    # def enviar():
+    #     print(en.get())
+    #     en.delete(0,END)
         # mensagem = str
         # mensagem = str(en.get())
         # return mensagem.isdigit()
         # return en
         # print(mensagem)
         # fileial = en.get()
-        print(en.get())
         # janela2.destroy()
 
 def hello():

@@ -16,6 +16,7 @@ Para inicializar: net start “nome do serviço”
 Para parar: net stop “nome do serviço”
 Para pausar: net pause “nome do serviço”
 Para continuar um serviço pausado: net continue “nome do serviço”
+
 --------------------------------------------------
 Instalando Ambiente virtual:
 pip install virtualenv

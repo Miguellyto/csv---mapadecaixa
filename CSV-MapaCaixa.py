@@ -1,7 +1,6 @@
 from cgitb import text
 from distutils.command.upload import upload
 import pandas as pd
-import numpy as np
 import os
 from pathlib import Path
 from  tkinter import*
@@ -20,34 +19,16 @@ def UploadAction():
     mapadecaixa.rename(columns = colunas, inplace=True) 
     new_ordem_colls = ['FILIAL', 'DATA', 'DEBITO', 'CREDITO', 'VALOR', 'HISTORICO']
     mapadecaixa = mapadecaixa[new_ordem_colls]
+    filial = input("Digite a Filial: ")
 
-    filial = en.get()
     mapadecaixa['FILIAL'] = filial
     mapadecaixa.to_csv('MapaCaixa.csv', index=False) 
 
 janela = Tk()
 janela.title('CSV - Mapa de Caixa')
 janela.geometry('840x250')
-
-def open():
-    global en
-    janela2 = Toplevel()
-    janela2.geometry("280x100")  
-    janela2.title("CSV - Mapa de Caixa") 
-    en = Entry(janela2, validatecommand=('%S'))
-    en.pack()
-    en.get()
-    # en.insert(0, "Digite a Filial: ")
-
-    botao = Button(janela2, text='OK', command=lambda: [enviar()])
-    # botao = Button(janela2, text='OK', command=lambda: [enviar(), janela2.destroy()])
-    botao.pack()
-
-    def enviar():
-        print(en.get())
-
 def hello():
-    tkinter.messagebox.showinfo('CSV - Mapa de Caixa', 'CSV Editado com Sucesso!') 
+    tkinter.messagebox.showinfo('CSV - Mapa de Caixa', 'CSV Editado com Sucesso!')  
 
 texto = Label(janela, text='Selecione o Arquivo CSV: Movimentação geral')
 texto.grid(column=1, row=0, padx=10, pady=10)
