@@ -3,7 +3,6 @@ https://pypi.org/project/pyinstaller/
 pip install pyinstaller
 
 Entre na pasta e digite o comando: 
-
 # pyinstaller app.pyw --onefile
 
 Obs.:
