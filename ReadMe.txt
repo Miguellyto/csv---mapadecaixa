@@ -4,6 +4,8 @@ pip install pyinstaller
 
 Entre na pasta e digite o comando: 
 # pyinstaller app.pyw --onefile
+Criando EXE com Icon:
+# pyinstaller CSV_Editor.pyw -i csv-icon.ico --onefile
 
 Obs.:
 --onefile (dois traços e depois a palavra "onefile").

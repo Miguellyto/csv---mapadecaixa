@@ -29,22 +29,21 @@ janela = Tk()
 janela.title('CSV - Mapa de Caixa')
 janela.geometry('840x250')
 
+def enviar():
+    print(en.get())
+
 def open():
     global en
     janela2 = Toplevel()
     janela2.geometry("280x100")  
-    janela2.title("CSV - Mapa de Caixa") 
+    janela2.title("CSV - Mapa de Caixa")
     en = Entry(janela2, validatecommand=('%S'))
+    en.focus()
     en.pack()
     en.get()
-    # en.insert(0, "Digite a Filial: ")
 
     botao = Button(janela2, text='OK', command=lambda: [enviar()])
-    # botao = Button(janela2, text='OK', command=lambda: [enviar(), janela2.destroy()])
     botao.pack()
-
-    def enviar():
-        print(en.get())
 
 def hello():
     tkinter.messagebox.showinfo('CSV - Mapa de Caixa', 'CSV Editado com Sucesso!') 
