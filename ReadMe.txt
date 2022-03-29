@@ -6,7 +6,8 @@ Entre na pasta e digite o comando:
 # pyinstaller app.pyw --onefile
 Criando EXE com Icon:
 # pyinstaller CSV_Editor.pyw -i csv-icon.ico --onefile
-
+# pyinstaller --noconsole exec_main.py 
+# https://pt.stackoverflow.com/questions/266610/problema-com-execut%C3%A1vel-python-gerado-pelo-pyinstaller
 Obs.:
 --onefile (dois traços e depois a palavra "onefile").
 ele transforma tudo num arquivo só (e um terço de tamanho. Fica bem menor. O meu programa de 16MB caiu para 6.5MB).

@@ -27,6 +27,7 @@ def UploadAction():
 
 janela = Tk()
 janela.title('CSV - Mapa de Caixa')
+janela.iconbitmap('csv-icon.ico')
 janela.geometry('840x250')
 
 def enviar():
@@ -35,6 +36,7 @@ def enviar():
 def open():
     global en
     janela2 = Toplevel()
+    janela2.iconbitmap('csv-icon.ico')
     janela2.geometry("280x100")  
     janela2.title("CSV - Mapa de Caixa")
     en = Entry(janela2, validatecommand=('%S'))
@@ -58,9 +60,12 @@ botao = Button(janela, bg = "yellow", fg = "red", text='Selecionar Arquivo...', 
 botao.grid(column=1, row=2, padx=10, pady=10)
 
 texto = Label(janela, text='Obs.: Esta aplicação foi desenvolvida para manipular o arquivo CSV gerado em "/Menu/Retaguarda da Loja/Tesouraria/Mapa de Caixa" do ERP Innovaro.')
-texto.grid(column=1, row=3, padx=10, pady=10)
+texto.grid(column=1, row=3, padx=0, pady=0)
 
 texto = Label(janela, text='Antes de gerar o arquivo CSV escolher o separador Virgula (,) e não o Ponto e Virgula (;).')
-texto.grid(column=1, row=4, padx=10, pady=10)
+texto.grid(column=1, row=4, padx=0, pady=0)
+
+texto = Label(janela, text='Copyright © 2022 - Desenvolvido pelo Departamento de Tecnologia da Informação (DTI).')
+texto.grid(column=1, row=5, padx=40, pady=40)
 
 janela.mainloop()
