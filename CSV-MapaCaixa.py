@@ -12,7 +12,7 @@ def UploadAction():
     print('Escolha o Arquivo CSV: ', filename)
 
     mapadecaixa = pd.read_csv(filename, encoding='ANSI', sep=',', header=0, thousands = '.', decimal = ',', dtype = {'Valor':np.float64})
-    mapadecaixa['HISTORICO'] = 10.01
+    mapadecaixa['HISTORICO'] = 10.01,
     mapadecaixa['CREDITO'] = 10164 
     colunas = {'4o. Agrupamento':'FILIAL', 'Descrição':'DESCRIÇÃO','Crédito':'DEBITO', 'Emissão':'DATA', 'Valor':'VALOR'}
 
@@ -46,3 +46,4 @@ texto = Label(janela, text='Antes de gerar o arquivo CSV escolher o separador Vi
 texto.grid(column=1, row=4, padx=10, pady=10)
 
 janela.mainloop()
+

@@ -40,4 +40,16 @@ install python 3.9.9
 pip install cx-freeze
 python -m pip install --upgrade pip
 cxfreeze -c hello.py --target-dir dist
-
+--------------------------------------------------
+-uma dúvida o "4o. Agrupamento" você utiliza?
+--é extamente no grupo 4 que vem as contas
+veja:
+Cart Fortbrasil;511077
+o nome "Cart Fort brasil", passamos pra maiúsculo e colocamos como 1 histórico
+após o código 10.01
+a conta que vem ao lado do nome a gente separa e cola na conta a débito logo após a data
+-
+tipos de excessões que poderão vir no grupo3
+DPL - 10265
+CRÉDITO BANCÁRIO - 10265
+CHEQUE  - 10267
