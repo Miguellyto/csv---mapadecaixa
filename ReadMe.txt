@@ -41,7 +41,7 @@ pip install cx-freeze
 python -m pip install --upgrade pip
 cxfreeze -c hello.py --target-dir dist
 --------------------------------------------------
--uma dúvida o "4o. Agrupamento" você utiliza?
+-Uma dúvida o "4o. Agrupamento" você utiliza?
 --é extamente no grupo 4 que vem as contas
 veja:
 Cart Fortbrasil;511077
