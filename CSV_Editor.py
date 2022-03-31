@@ -90,3 +90,5 @@ root.mainloop()
 # if  (('4o. Agrupamento' == 'DUPLICATA') end ('4o. Agrupamento' == 'CRÉDITO BANCÁRIO') end ('4o. Agrupamento' == 'CHEQUE À VISTA')):
 #     '4o. Agrupamento' + '-' + 'Cliente'
 # else:
+
+mapadecaixa.apply(lambda x: '3o. Agrupamento' if x.'3o. Agrupamento' = 'DUPLICATA' else '3o. Agrupamento', axis=1)
