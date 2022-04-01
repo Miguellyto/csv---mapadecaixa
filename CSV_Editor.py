@@ -85,18 +85,32 @@ texto.grid(column=1, row=5, padx=40, pady=40)
 
 root.mainloop()
 
-
 # ----------------------------------------------------------------------------------------------------------------------------------- 
-# if  (('4o. Agrupamento' == 'DUPLICATA') end ('4o. Agrupamento' == 'CRÉDITO BANCÁRIO') end ('4o. Agrupamento' == 'CHEQUE À VISTA')):
-#     '4o. Agrupamento' + '-' + 'Cliente'
-# else:
-
 # mapadecaixa.apply(lambda x: '3o. Agrupamento' if x.'3o. Agrupamento' == 'DUPLICATA' else '3o. Agrupamento', axis=1)
 
-valores = []
+# Criando nova coluna
+mapadecaixa['nova_coluna'] = ''
+# Fazendo a iteração:
+for index, row in mapadecaixa.iterrows():
+    if row['3o. Agrupamento'] == 'DUPLICATA':
+    # if row['LOCALIDADE'] == row['ds_cidade']:
+        mapadecaixa.loc[index,'nova_coluna'] =  str(mapadecaixa.loc[index,'Cliente'])  
+# -------------------------------------------------------------------------------------
+    valores = []
 for linha in mapadecaixa.itertuples(): # Melhor e mais rápido.
     valores.append('3o. Agrupamento' if linha['3o. Agrupamento'] == 'DUPLICATA' else '')
 mapadecaixa['4AGRUPAMENTO'] = valores
+# -------------------------------------------------------------------------------------
+if  (('4o. Agrupamento' == 'DUPLICATA') end ('4o. Agrupamento' == 'CRÉDITO BANCÁRIO') end ('4o. Agrupamento' == 'CHEQUE À VISTA')):
+    '4o. Agrupamento' + '-' + 'Cliente'
+# -------------------------------------------------------------------------------------
+var = '3o. Agrupamento'
+
+if (var =='DUPLICATA' end var =='CRÉDITO BANCÁRIO'):
+    ('4o. Agrupamento' + '-' + 'Cliente')
+elif ('3o. Agrupamento' == 'CHEQUE À VISTA'):
+    ('4o. Agrupamento' + '-' + 'Cliente')
+else:
 
 # 03:20 https://www.youtube.com/watch?v=vJ45uEISJco
 
