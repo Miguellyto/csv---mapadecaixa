@@ -86,9 +86,36 @@ texto.grid(column=1, row=5, padx=40, pady=40)
 root.mainloop()
 
 
-# ------------------------ 
+# ----------------------------------------------------------------------------------------------------------------------------------- 
 # if  (('4o. Agrupamento' == 'DUPLICATA') end ('4o. Agrupamento' == 'CRÉDITO BANCÁRIO') end ('4o. Agrupamento' == 'CHEQUE À VISTA')):
 #     '4o. Agrupamento' + '-' + 'Cliente'
 # else:
 
-mapadecaixa.apply(lambda x: '3o. Agrupamento' if x.'3o. Agrupamento' = 'DUPLICATA' else '3o. Agrupamento', axis=1)
+# mapadecaixa.apply(lambda x: '3o. Agrupamento' if x.'3o. Agrupamento' == 'DUPLICATA' else '3o. Agrupamento', axis=1)
+
+valores = []
+for linha in mapadecaixa.itertuples(): # Melhor e mais rápido.
+    valores.append('3o. Agrupamento' if linha['3o. Agrupamento'] == 'DUPLICATA' else '')
+mapadecaixa['4AGRUPAMENTO'] = valores
+
+# 03:20 https://www.youtube.com/watch?v=vJ45uEISJco
+
+valores = []
+for indice, linha in mapadecaixa.iterrows():
+    valores.append('3o. Agrupamento' if linha['3o. Agrupamento'] == 'DUPLICATA' else '')
+mapadecaixa['4AGRUPAMENTO'] = valores
+
+# 03:06 https://www.youtube.com/watch?v=jq2UVaMJTyc
+
+# ORDENANDO COLLUNAS
+mapadecaixa.sort_values('DEBITO', ascending=False, ignore_index=True, na_position='first', inplace=True) 
+# O ignore_index=True permanece com o indece sempre em ordem independente se o ASCENDING seja FALSE ou TRUE.
+# O na_position='first' ordena as linhas vázias/NULAS nas primeiras posições.
+# O inplace=True grava a mudança no DataFrame
+
+mapadecaixa.sort_values() #Ordena todas as linhas do DataFrame do maior para o menor
+mapadecaixa.sort_values(axis=1, 'DEBITO', ascending=False, ignore_index=True, na_position='first', inplace=True) 
+# O axis=1 para as COLUNAS e axis=0 para as LINHAS
+
+# https://www.youtube.com/watch?v=2oTmQPQD2EU&list=PLEdfCNsWt0gxURVswsV_STMrCo_n7rD5M&index=65
+
