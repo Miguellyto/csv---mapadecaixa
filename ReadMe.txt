@@ -53,3 +53,16 @@ tipos de excessões que poderão vir no grupo3
 DPL - 10265
 CRÉDITO BANCÁRIO - 10265
 CHEQUE  - 10267
+--------------------------------------------------
+
+3 agrupamento
+quando for DUPLICATA a conta "DEBITO" = 10265
+quando for CRÉDITO BANCÁRIO a conta "DEBITO" = 10265
+quando for CHEQUE A VISTA a conta "DEBITO" = 10267
+
+4 agrupamento
+quando for "Carteira Cobrança Simples" a conta "DEBITO" = 45534
+quando for "Cart Credito Garantia" a conta "DEBITO" = 344640
+
+DESCRIÇÃO
+quando na DESCRIÇÃO = "RC*" a conta a CRÉDITO = 31472
