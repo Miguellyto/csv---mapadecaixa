@@ -8,7 +8,7 @@ import tkinter.messagebox
 from tkinter import filedialog
 
 def UploadAction():
-    global vazia
+    global LinhasEmBranco
     filename = filedialog.askopenfilename(initialdir="C:/Users//Downloads/", title="Selecione um Arquivo CSV", filetypes=(("csv files", "*.csv"),("all files", "*.*")))
     print('Escolha o Arquivo CSV: ', filename)
 
@@ -60,8 +60,8 @@ def UploadAction():
     filial = en.get()
     mapadecaixa['FILIAL'] = filial
     mapadecaixa.to_csv('MapaCaixa.csv', encoding='latin-1', index=False) 
-    vazia = "Existem:",mapadecaixa['DEBITO'].isnull().sum(),"Contas em branco na coluna DÉBITO"
-    print(vazia)
+    LinhasEmBranco = "Existem:",mapadecaixa['DEBITO'].isnull().sum(),"Contas em branco na coluna DÉBITO"
+    print(LinhasEmBranco)
 
 root = Tk()
 root.title('CSV - Mapa de Caixa')
@@ -85,7 +85,7 @@ def open():
 
 def hello():
     tkinter.messagebox.showinfo('CSV - Mapa de Caixa', 'CSV Editado com Sucesso!')
-    texto = Label(root, text=vazia)
+    texto = Label(root, bg = "yellow", fg = "red", text=LinhasEmBranco)
     texto.grid(column=1, row=5, padx=40, pady=40)
 
 texto = Label(root, text='Selecione o Arquivo CSV: Movimentação geral')
