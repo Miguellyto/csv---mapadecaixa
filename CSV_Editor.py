@@ -60,7 +60,7 @@ def UploadAction():
     filial = en.get()
     mapadecaixa['FILIAL'] = filial
     mapadecaixa.to_csv('MapaCaixa.csv', encoding='latin-1', index=False) 
-    LinhasEmBranco = "Existem:",mapadecaixa['DEBITO'].isnull().sum(),"Contas em branco na coluna DÉBITO"
+    LinhasEmBranco = "Existem:(",mapadecaixa['DEBITO'].isnull().sum(),")","Contas em branco na coluna DÉBITO"
     print(LinhasEmBranco)
 
 root = Tk()
