@@ -4,6 +4,7 @@ pip install pyinstaller
 
 Entre na pasta e digite o comando: 
 # pyinstaller app.pyw --onefile
+
 Criando EXE com Icon:
 # pyinstaller CSV_Editor.pyw -i csv-icon.ico --onefile
 # pyinstaller --noconsole exec_main.py 
@@ -13,6 +14,13 @@ Obs.:
 ele transforma tudo num arquivo só (e um terço de tamanho. Fica bem menor. O meu programa de 16MB caiu para 6.5MB).
 --Tkinter, abrir apenas interface gráfica
 Basta salvar seu arquivo com a extensão ".pyw" em vez de ".py". (isso é só no Windows - nos outros sistemas um programa Python executado pela interface gráfica não abre um terminal automaticamente)
+
+OBS.: Failed to import any qt binding
+pip install PyQt5
+
+pip uninstall matplotlib
+python -m pip install --upgrade pip
+pip install matplotlib
 ------------------------------------------------
 No prompt de comando, utilize as instruções abaixo de acordo com sua necessidade:
 Para inicializar: net start “nome do serviço”
