@@ -8,19 +8,50 @@ import tkinter.messagebox
 from tkinter import filedialog
 
 def UploadAction():
+    global LinhasEmBranco
     filename = filedialog.askopenfilename(initialdir="C:/Users//Downloads/", title="Selecione um Arquivo CSV", filetypes=(("csv files", "*.csv"),("all files", "*.*")))
     print('Escolha o Arquivo CSV: ', filename)
 
     mapadecaixa = pd.read_csv(filename, encoding='ANSI', sep=',', header=0, thousands = '.', decimal = ',', dtype = {'Valor':np.float64})
 
     mapadecaixa[['4o. Agrupamento','DEBITO']] = mapadecaixa['4o. Agrupamento'].str.split(';', expand=True)
+    for index, row in mapadecaixa.iterrows():
+        if row['3o. Agrupamento'] == 'Duplicata':
+            mapadecaixa.loc[index, 'DEBITO'] = '10265'
+        if row['3o. Agrupamento'] == 'Crédito Bancário':
+            mapadecaixa.loc[index, 'DEBITO'] = '10265'
+        if row['3o. Agrupamento'] == 'Cheque à vista':
+            mapadecaixa.loc[index, 'DEBITO'] = '10267'
+
+    for index, row in mapadecaixa.iterrows():
+        if row['4o. Agrupamento'] == 'Carteira Cobrança Simples':
+            mapadecaixa.loc[index, 'DEBITO'] = '45534'
+        if row['4o. Agrupamento'] == 'Cart Credito Garantia':
+            mapadecaixa.loc[index, 'DEBITO'] = '344640'
+
+    mapadecaixa['CREDITO'] = '10164' 
+    for index, row in mapadecaixa.iterrows():
+        if row['Descrição'].startswith('RC'):
+            mapadecaixa.loc[index, 'CREDITO'] = '31472'
+
+    mapadecaixa['NEWCOLUN'] = ''
+    for index, row in mapadecaixa.iterrows():
+        if row['3o. Agrupamento'] == 'Duplicata':
+            mapadecaixa.loc[index,'NEWCOLUN'] =  str(mapadecaixa.loc[index,'3o. Agrupamento']) + ' - ' + str(mapadecaixa.loc[index,'Cliente'])
+        if row['3o. Agrupamento'] == 'Crédito Bancário':
+            mapadecaixa.loc[index,'NEWCOLUN'] =  str(mapadecaixa.loc[index,'3o. Agrupamento']) + ' - ' + str(mapadecaixa.loc[index,'Cliente'])
+        if row['3o. Agrupamento'] == 'Cheque à vista':
+            mapadecaixa.loc[index,'NEWCOLUN'] =  str(mapadecaixa.loc[index,'3o. Agrupamento']) + ' - ' + str(mapadecaixa.loc[index,'Cliente'])
 
     mapadecaixa['FILIAL'] = ''
-    mapadecaixa['CREDITO'] = '10164' 
-    mapadecaixa['HISTORICO'] = '10.01'+ "," + mapadecaixa['4o. Agrupamento']+ "," + mapadecaixa['Cliente']+ "," + mapadecaixa['Descrição']
+    mapadecaixa['HISTORICO'] = '10.01'+ "," + mapadecaixa['NEWCOLUN']+ "," + mapadecaixa['Descrição']
+    mapadecaixa['HISTORICO'] = mapadecaixa['HISTORICO'].astype(str)
+    mapadecaixa['HISTORICO'] = mapadecaixa['HISTORICO'].str.replace(',,', ',')
     mapadecaixa['HISTORICO'] = mapadecaixa['HISTORICO'].str.upper()
 
-    colunas = {'4o. Agrupamento':'4AGRUPAMENTO','Descrição':'DESCRIÇÃO','Cliente':'CLIENTE','Emissão':'DATA','Valor':'VALOR'}
+    mapadecaixa = mapadecaixa.drop(['3o. Agrupamento','4o. Agrupamento','Descrição','Cliente', 'NEWCOLUN'], axis=1)
+
+    colunas = {'Emissão':'DATA','Valor':'VALOR'}
     mapadecaixa.rename(columns = colunas, inplace=True) 
 
     new_ordem_colls = ['FILIAL', 'DATA', 'DEBITO', 'CREDITO', 'VALOR', 'HISTORICO']
@@ -28,8 +59,12 @@ def UploadAction():
 
     filial = en.get()
     mapadecaixa['FILIAL'] = filial
-    # mapadecaixa.to_csv('MapaCaixa.csv', index=False)
     mapadecaixa.to_csv('MapaCaixa.csv', encoding='latin-1', index=False) 
+    # print('Existem Linhas em Branco na coluna:','\n',mapadecaixa[mapadecaixa['DEBITO'].isnull()])
+    # LinhasEmBranco = mapadecaixa[mapadecaixa['DEBITO'].isnull()]
+    # LinhasEmBranco = "Existem:",mapadecaixa['DEBITO'].isnull().sum(),"Contas em branco na coluna DÉBITO"
+    LinhasEmBranco = "Existem:(",mapadecaixa['DEBITO'].isnull().sum(),")","Contas em branco na coluna DÉBITO"
+    print(LinhasEmBranco)
 
 # root = tk.Tk()
 root = Tk()
@@ -63,12 +98,15 @@ def open():
     botao.pack()
 
 def hello():
-    tkinter.messagebox.showinfo('CSV - Mapa de Caixa', 'CSV Editado com Sucesso!') 
+    # tkinter.messagebox.showinfo(LinhasEmBranco)
+    tkinter.messagebox.showinfo('CSV - Mapa de Caixa', 'CSV Editado com Sucesso!')
+    texto = Label(root, bg = "yellow", fg = "red", text=LinhasEmBranco)
+    texto.grid(column=1, row=5, padx=40, pady=40)
 
 texto = Label(root, text='Selecione o Arquivo CSV: Movimentação geral')
 texto.grid(column=1, row=0, padx=10, pady=10)
 
-botao = Button(root, bg = "yellow", fg = "red", text='Digite a Filial', command=open) 
+botao = Button(root, bg = "yellow", fg = "red", text='Digite a Loja', command=open) 
 botao.grid(column=1, row=1, padx=10, pady=10)
 
 botao = Button(root, bg = "yellow", fg = "red", text='Selecionar Arquivo...',  command=lambda: [UploadAction(), hello()])
@@ -80,57 +118,10 @@ texto.grid(column=1, row=3, padx=0, pady=0)
 texto = Label(root, text='Antes de gerar o arquivo CSV escolher o separador Virgula (,) e não o Ponto e Virgula (;).')
 texto.grid(column=1, row=4, padx=0, pady=0)
 
-texto = Label(root, text='Copyright © 2022 - Desenvolvido pelo Departamento de Tecnologia da Informação (DTI).')
-texto.grid(column=1, row=5, padx=40, pady=40)
+# texto = Label(root, text='Copyright © 2022 - Desenvolvido pelo Departamento de Tecnologia da Informação (DTI).')
+# texto.grid(column=1, row=6, padx=40, pady=40)
+
+# texto = Label(root, text=LinhasEmBranco)
+# texto.grid(column=1, row=7, padx=40, pady=40)
 
 root.mainloop()
-
-# ----------------------------------------------------------------------------------------------------------------------------------- 
-# mapadecaixa.apply(lambda x: '3o. Agrupamento' if x.'3o. Agrupamento' == 'DUPLICATA' else '3o. Agrupamento', axis=1)
-
-# Criando nova coluna
-mapadecaixa['nova_coluna'] = ''
-# Fazendo a iteração:
-for index, row in mapadecaixa.iterrows():
-    if row['3o. Agrupamento'] == 'DUPLICATA':
-    # if row['LOCALIDADE'] == row['ds_cidade']:
-        mapadecaixa.loc[index,'nova_coluna'] =  str(mapadecaixa.loc[index,'Cliente'])  
-# -------------------------------------------------------------------------------------
-    valores = []
-for linha in mapadecaixa.itertuples(): # Melhor e mais rápido.
-    valores.append('3o. Agrupamento' if linha['3o. Agrupamento'] == 'DUPLICATA' else '')
-mapadecaixa['4AGRUPAMENTO'] = valores
-# -------------------------------------------------------------------------------------
-if  (('4o. Agrupamento' == 'DUPLICATA') end ('4o. Agrupamento' == 'CRÉDITO BANCÁRIO') end ('4o. Agrupamento' == 'CHEQUE À VISTA')):
-    '4o. Agrupamento' + '-' + 'Cliente'
-# -------------------------------------------------------------------------------------
-var = '3o. Agrupamento'
-
-if (var =='DUPLICATA' end var =='CRÉDITO BANCÁRIO'):
-    ('4o. Agrupamento' + '-' + 'Cliente')
-elif ('3o. Agrupamento' == 'CHEQUE À VISTA'):
-    ('4o. Agrupamento' + '-' + 'Cliente')
-else:
-
-# 03:20 https://www.youtube.com/watch?v=vJ45uEISJco
-
-valores = []
-for indice, linha in mapadecaixa.iterrows():
-    valores.append('3o. Agrupamento' if linha['3o. Agrupamento'] == 'DUPLICATA' else '')
-mapadecaixa['4AGRUPAMENTO'] = valores
-
-# 03:06 https://www.youtube.com/watch?v=jq2UVaMJTyc
-
-# ORDENANDO COLLUNAS
-mapadecaixa.sort_values('DEBITO', ascending=False, ignore_index=True, na_position='first', inplace=True) 
-# O ignore_index=True permanece com o indece sempre em ordem independente se o ASCENDING seja FALSE ou TRUE.
-# O na_position='first' ordena as linhas vázias/NULAS nas primeiras posições.
-# O inplace=True grava a mudança no DataFrame
-
-mapadecaixa.sort_values() #Ordena todas as linhas do DataFrame do maior para o menor
-mapadecaixa.sort_values(axis=1, 'DEBITO', ascending=False, ignore_index=True, na_position='first', inplace=True) 
-# O axis=1 para as COLUNAS e axis=0 para as LINHAS
-
-# https://www.youtube.com/watch?v=2oTmQPQD2EU&list=PLEdfCNsWt0gxURVswsV_STMrCo_n7rD5M&index=65
-
-
