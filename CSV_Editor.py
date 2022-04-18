@@ -6,6 +6,8 @@ from pathlib import Path
 from  tkinter import*
 import tkinter.messagebox
 from tkinter import filedialog
+# import PyQt5
+# import matplotlib.pyplot
 
 def UploadAction():
     global LinhasEmBranco
@@ -56,6 +58,8 @@ def UploadAction():
 
     new_ordem_colls = ['FILIAL', 'DATA', 'DEBITO', 'CREDITO', 'VALOR', 'HISTORICO']
     mapadecaixa = mapadecaixa[new_ordem_colls]
+    # Preenchendo Linhas em Branco
+    mapadecaixa.fillna(1111, inplace=True)
 
     filial = en.get()
     mapadecaixa['FILIAL'] = filial
@@ -102,6 +106,9 @@ texto.grid(column=1, row=3, padx=0, pady=0)
 
 texto = Label(root, text='Antes de gerar o arquivo CSV escolher o separador Virgula (,) e não o Ponto e Virgula (;).')
 texto.grid(column=1, row=4, padx=0, pady=0)
+
+texto = Label(root, text='Copyright © 2022 - Desenvolvido pelo Departamento de Tecnologia da Informação (DTI).')
+texto.grid(column=1, row=6, padx=40, pady=40)
 
 # texto = Label(root, text='Copyright © 2022 - Desenvolvido pelo Departamento de Tecnologia da Informação (DTI).')
 # texto.grid(column=1, row=6, padx=40, pady=40)
