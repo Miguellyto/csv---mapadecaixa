@@ -122,3 +122,27 @@ quando for "Cart Credito Garantia" a conta "DEBITO" = 344640
 
 DESCRIÇÃO
 quando na DESCRIÇÃO = "RC*" a conta a CRÉDITO = 31472
+---------------------------------------------------------------
+Obs.: Não salvar o CSV com os titulos das colunas
+
+3 agrupamento
+DUPLICATA = 10265
+CRÉDITO BANCÁRIO = 10265
+CHEQUE A VISTA = 10267
+
+4 agrupamento
+L880cofre
+Cart Credito Devolução = 91392315
+Carteira Cobrança Simples = 45534
+Cart Credito Garantia = 344640
+Cart Fortbrasil = 511077
+Cart American Express Pagseguro = 10225
+Cart Elo Credito Pagseguro = 45764
+Cart Visa Credito Pagseguro = 45764
+Cart Elo Debito  Pagseguro = 45764
+Cart Visa Eletron Pagseguro = 45764
+Cart Hipercard Pagseguro = 10221
+Cart Mastercard Pagseguro = 10221
+Cart Hiper Crédito Pagseguro = 10221
+Cart Stone Hipercard = 10221
+Cart Maestro Pagseguro = 10221
