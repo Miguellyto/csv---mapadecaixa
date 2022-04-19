@@ -16,19 +16,25 @@ def UploadAction():
 
     mapadecaixa = pd.read_csv(filename, encoding='ANSI', sep=',', header=0, thousands = '.', decimal = ',', dtype = {'Valor':np.float64})
 
+    for index, row in mapadecaixa.iterrows():
+        if row['3o. Agrupamento'] == 'Cartão de Crédito':
+            mapadecaixa.loc[index, '4o. Agrupamento'] = 'Cart Hipercard Pagseguro;10221'
+        elif row['3o. Agrupamento'] == 'Cartão de Débito':
+            mapadecaixa.loc[index, '4o. Agrupamento'] = 'Cart Maestro Pagseguro;10221'
+
     mapadecaixa[['4o. Agrupamento','DEBITO']] = mapadecaixa['4o. Agrupamento'].str.split(';', expand=True)
     for index, row in mapadecaixa.iterrows():
         if row['3o. Agrupamento'] == 'Duplicata':
             mapadecaixa.loc[index, 'DEBITO'] = '10265'
-        if row['3o. Agrupamento'] == 'Crédito Bancário':
+        elif row['3o. Agrupamento'] == 'Crédito Bancário':
             mapadecaixa.loc[index, 'DEBITO'] = '10265'
-        if row['3o. Agrupamento'] == 'Cheque à vista':
+        elif row['3o. Agrupamento'] == 'Cheque à vista':
             mapadecaixa.loc[index, 'DEBITO'] = '10267'
 
     for index, row in mapadecaixa.iterrows():
         if row['4o. Agrupamento'] == 'Carteira Cobrança Simples':
             mapadecaixa.loc[index, 'DEBITO'] = '45534'
-        if row['4o. Agrupamento'] == 'Cart Credito Garantia':
+        elif row['4o. Agrupamento'] == 'Cart Credito Garantia':
             mapadecaixa.loc[index, 'DEBITO'] = '344640'
 
     mapadecaixa['CREDITO'] = '10164' 
@@ -40,9 +46,9 @@ def UploadAction():
     for index, row in mapadecaixa.iterrows():
         if row['3o. Agrupamento'] == 'Duplicata':
             mapadecaixa.loc[index,'NEWCOLUN'] =  str(mapadecaixa.loc[index,'3o. Agrupamento']) + ' - ' + str(mapadecaixa.loc[index,'Cliente'])
-        if row['3o. Agrupamento'] == 'Crédito Bancário':
+        elif row['3o. Agrupamento'] == 'Crédito Bancário':
             mapadecaixa.loc[index,'NEWCOLUN'] =  str(mapadecaixa.loc[index,'3o. Agrupamento']) + ' - ' + str(mapadecaixa.loc[index,'Cliente'])
-        if row['3o. Agrupamento'] == 'Cheque à vista':
+        elif row['3o. Agrupamento'] == 'Cheque à vista':
             mapadecaixa.loc[index,'NEWCOLUN'] =  str(mapadecaixa.loc[index,'3o. Agrupamento']) + ' - ' + str(mapadecaixa.loc[index,'Cliente'])
 
     mapadecaixa['FILIAL'] = ''
@@ -58,12 +64,10 @@ def UploadAction():
 
     new_ordem_colls = ['FILIAL', 'DATA', 'DEBITO', 'CREDITO', 'VALOR', 'HISTORICO']
     mapadecaixa = mapadecaixa[new_ordem_colls]
-    # Preenchendo Linhas em Branco
-    mapadecaixa.fillna(1111, inplace=True)
 
     filial = en.get()
     mapadecaixa['FILIAL'] = filial
-    mapadecaixa.to_csv('MapaCaixa.csv', encoding='latin-1', header=False, index=False) 
+    mapadecaixa.to_csv('Filial_'+filial+' - MapaCaixa.csv', encoding='latin-1', header=False, index=False) 
     LinhasEmBranco = "Existem:(",mapadecaixa['DEBITO'].isnull().sum(),")","Contas em branco na coluna DÉBITO"
     print(LinhasEmBranco)
 
@@ -95,7 +99,7 @@ def hello():
 texto = Label(root, text='Selecione o Arquivo CSV: Movimentação geral')
 texto.grid(column=1, row=0, padx=10, pady=10)
 
-botao = Button(root, bg = "yellow", fg = "red", text='Digite a Loja', command=open) 
+botao = Button(root, bg = "yellow", fg = "red", text='Digite a Filial', command=open) 
 botao.grid(column=1, row=1, padx=10, pady=10)
 
 botao = Button(root, bg = "yellow", fg = "red", text='Selecionar Arquivo...',  command=lambda: [UploadAction(), hello()])
@@ -109,8 +113,5 @@ texto.grid(column=1, row=4, padx=0, pady=0)
 
 texto = Label(root, text='Copyright © 2022 - Desenvolvido pelo Departamento de Tecnologia da Informação (DTI).')
 texto.grid(column=1, row=6, padx=40, pady=40)
-
-# texto = Label(root, text='Copyright © 2022 - Desenvolvido pelo Departamento de Tecnologia da Informação (DTI).')
-# texto.grid(column=1, row=6, padx=40, pady=40)
 
 root.mainloop()
