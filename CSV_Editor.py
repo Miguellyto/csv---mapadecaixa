@@ -6,8 +6,6 @@ from pathlib import Path
 from  tkinter import*
 import tkinter.messagebox
 from tkinter import filedialog
-# import PyQt5
-# import matplotlib.pyplot
 
 def UploadAction():
     global LinhasEmBranco
@@ -55,6 +53,7 @@ def UploadAction():
     mapadecaixa['HISTORICO'] = '10.01'+ "," + mapadecaixa['NEWCOLUN']+ "," + mapadecaixa['Descrição']
     mapadecaixa['HISTORICO'] = mapadecaixa['HISTORICO'].astype(str)
     mapadecaixa['HISTORICO'] = mapadecaixa['HISTORICO'].str.replace(',,', ',')
+    mapadecaixa['HISTORICO'] = mapadecaixa['HISTORICO'].str.replace('"', '')
     mapadecaixa['HISTORICO'] = mapadecaixa['HISTORICO'].str.upper()
 
     mapadecaixa = mapadecaixa.drop(['3o. Agrupamento','4o. Agrupamento','Descrição','Cliente', 'NEWCOLUN'], axis=1)
