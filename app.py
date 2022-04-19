@@ -28,7 +28,7 @@ def contact():
         print(request.form['file'])    
         print('-------------------------')
         if form.validate()== True:
-            return "CSV Editado com Sucesso!"  
+            return "CSV Editado com Sucesso!"   
         return render_template('views/contacts/contact.html', form = form)
     return render_template('views/contacts/contact.html', form = form)
 

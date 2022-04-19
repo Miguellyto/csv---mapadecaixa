@@ -132,6 +132,14 @@ quando for "Cart Credito Garantia" a conta "DEBITO" = 344640
 
 DESCRIÇÃO
 quando na DESCRIÇÃO = "RC*" a conta a CRÉDITO = 31472
+---
+3 agrupamento
+quando 3 agrupamento for Cartão de Crédito e 4 agrupamento=vazio faça = Cart Hipercard Pagseguro;10221
+quando 3 agrupamento for Cartão de Débito e 4 agrupamento=vazio faça = Cart Maestro Pagseguro;10221
+
+Obs.:1 Conta a DEBITO = 10221 para 'Cartão de Crédito' e 'Cartão de Débito'.
+Obs.:2 Retirar as aspas que fica na coluna HISTORICO.
+
 ---------------------------------------------------------------
 Obs.: Não salvar o CSV com os titulos das colunas
 
@@ -156,3 +164,12 @@ Cart Mastercard Pagseguro = 10221
 Cart Hiper Crédito Pagseguro = 10221
 Cart Stone Hipercard = 10221
 Cart Maestro Pagseguro = 10221
+
+----------------------------------
+3 agrupamento
+quando for Cartão de Crédito e 4 agrupamento=vazio faça = Cart Hipercard Pagseguro;10221
+quando for Cartão de Débito e 4 agrupamento=vazio faça = Cart Maestro Pagseguro;10221
+
+Obs.:1 conta a DEBITO = 10221 para 'Cartão de Crédito' e 'Cartão de Débito'.
+
+Obs.:2, Retirar as aspas no CSV de saida.
