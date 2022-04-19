@@ -7,7 +7,7 @@
 comparação. o MapaCaixa1 e MapaCaixa2 são exemplo de saída.
 
 PARA RODAR OS ARQUIVOS PELO TERMINAL: python app.py
-
+------------------------------------------------------------
 https://pypi.org/project/pyinstaller/
 
 pip install pyinstaller
