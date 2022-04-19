@@ -63,7 +63,7 @@ def UploadAction():
 
     filial = en.get()
     mapadecaixa['FILIAL'] = filial
-    mapadecaixa.to_csv('MapaCaixa.csv', encoding='latin-1', index=False) 
+    mapadecaixa.to_csv('MapaCaixa.csv', encoding='latin-1', header=False, index=False) 
     LinhasEmBranco = "Existem:(",mapadecaixa['DEBITO'].isnull().sum(),")","Contas em branco na coluna DÉBITO"
     print(LinhasEmBranco)
 
