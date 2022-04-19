@@ -1,3 +1,13 @@
+ - OS ARQUIVOS:  app.py  que é o principal, app - Copia.py, SEUS CÓDIGOS DIZ RESPEITO AO DESENVOVIMENTO DA APLICAÇÃO WEB EM FLASK.
+
+ AS DEFINIÇÕES ABAIXO SE REFERE AO ARQUIVO: app2 copy.ipynb que é o principal, app2.ipynb, e CSV_Editor.py
+ e os arquvios app3.py, app3 - Copia.py, teste.py, teste2.py e CSV-MapaCaixa.py são modificações mais antigas dos arquivos anteriores.
+
+--OS ARQUVIOS CSVs: Movimentação geral LJ 880 CSV, principal, são usados para testes e manipulação. e o Movimentação geral LJ 880 excel, usado para
+comparação. o MapaCaixa1 e MapaCaixa2 são exemplo de saída.
+
+PARA RODAR OS ARQUIVOS PELO TERMINAL: python app.py
+
 https://pypi.org/project/pyinstaller/
 
 pip install pyinstaller
