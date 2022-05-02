@@ -1,5 +1,5 @@
 Obs.:
-O CSV_Editor é um execultável feito em python para rodar em sistemas windows. Ao ele em um sistema desatualizado pode gerar
+O CSV_Editor é um execultável feito em Python3.10.4 para rodar em sistemas windows. Ao execultar em um sistema desatualizado pode gerar
 o seguinte erro de DLL ausente:
 
 "O programa não pode ser iniciado porque está faltando api-ms-win-core-path-l1-1-0.dll no seu computador. tente resinsta-lo" 
