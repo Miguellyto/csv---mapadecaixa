@@ -53,15 +53,15 @@ def UploadAction():
     mapadecaixa['HISTORICO'] = '10.01'+ "," + mapadecaixa['NEWCOLUN']+ "," + mapadecaixa['Descrição']
     mapadecaixa['HISTORICO'] = mapadecaixa['HISTORICO'].astype(str)
     mapadecaixa['HISTORICO'] = mapadecaixa['HISTORICO'].str.replace(',,', ',')
-    mapadecaixa['HISTORICO'] = mapadecaixa['HISTORICO'].str.replace('"', '')
     mapadecaixa['HISTORICO'] = mapadecaixa['HISTORICO'].str.upper()
+    mapadecaixa['4o. Agrupamento'] = mapadecaixa['4o. Agrupamento'].str.upper()
 
-    mapadecaixa = mapadecaixa.drop(['3o. Agrupamento','4o. Agrupamento','Descrição','Cliente', 'NEWCOLUN'], axis=1)
+    mapadecaixa = mapadecaixa.drop(['3o. Agrupamento','Descrição','Cliente', 'NEWCOLUN'], axis=1)
 
     colunas = {'Emissão':'DATA','Valor':'VALOR'}
     mapadecaixa.rename(columns = colunas, inplace=True) 
 
-    new_ordem_colls = ['FILIAL', 'DATA', 'DEBITO', 'CREDITO', 'VALOR', 'HISTORICO']
+    new_ordem_colls = ['FILIAL', 'DATA', 'DEBITO', 'CREDITO', 'VALOR', '4o. Agrupamento', 'HISTORICO']
     mapadecaixa = mapadecaixa[new_ordem_colls]
 
     filial = en.get()
