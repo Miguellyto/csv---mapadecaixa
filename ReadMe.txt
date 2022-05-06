@@ -187,3 +187,17 @@ tipos de excessões que poderão vir no grupo3
 DPL - 10265
 CRÉDITO BANCÁRIO - 10265
 CHEQUE  - 10267
+--------------------------------06/05/2022-----------------------------------------
+-quando 4o. Agrupamento = Carteira Cobrança Simples E 3o. Agrupamento = Dinheiro
+faça DEBITO = 45534
+
+-quando 3o. Agrupamento = Cheque à vista FACA EM 4o. Agrupamento = CHEQUE A VISTA + CLIENTE
+
+quando 4o. Agrupamento = Carteira Cobrança Simples E 3o. Agrupamento = Crédito Bancário faça DEBITO = 10265 
+
+E FAÇA no 4o. Agrupamento = CREDITO BANCARIO + CLIENTE
+
+faltando no DEBITO 10265
+Que deve trazer no hist.p1 CREDITO BANCARIO + CLIENTE
+
+deve-se fazer uma escrita = ao DEBITO 10267-------------
