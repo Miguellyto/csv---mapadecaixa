@@ -200,4 +200,15 @@ E FAÇA no 4o. Agrupamento = CREDITO BANCARIO + CLIENTE
 faltando no DEBITO 10265
 Que deve trazer no hist.p1 CREDITO BANCARIO + CLIENTE
 
-deve-se fazer uma escrita = ao DEBITO 10267-------------
+deve-se fazer uma escrita = ao DEBITO 10267
+-------------
+NA SUA COLUNA DE DEBITO QUANDO FIZER O FILTRO NA LOJA 880 TEM QUE TER AS SEGUINTES CONTAS
+10221
+10225
+10265
+10267
+45534
+45764
+344640
+511077
+91392315
