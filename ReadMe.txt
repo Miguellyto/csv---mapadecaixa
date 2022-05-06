@@ -106,42 +106,52 @@ mapadecaixa.sort_values(axis=1, 'DEBITO', ascending=False, ignore_index=True, na
 # O axis=1 para as COLUNAS e axis=0 para as LINHAS
 
 # https://www.youtube.com/watch?v=2oTmQPQD2EU&list=PLEdfCNsWt0gxURVswsV_STMrCo_n7rD5M&index=65
---------------------------------------------------
--Uma dúvida o "4o. Agrupamento" você utiliza?
---é extamente no grupo 4 que vem as contas
-veja:
-Cart Fortbrasil;511077
-o nome "Cart Fort brasil", passamos pra maiúsculo e colocamos como 1 histórico
-após o código 10.01
-a conta que vem ao lado do nome a gente separa e cola na conta a débito logo após a data
--
-tipos de excessões que poderão vir no grupo3
-DPL - 10265
-CRÉDITO BANCÁRIO - 10265
-CHEQUE  - 10267
---------------------------------------------------
 
+--------------CUSTOMIZAÇÃO DO CSV MAPA DE CAIXA------------------------------------
+
+30/03/2022
 3 agrupamento
-quando for DUPLICATA a conta "DEBITO" = 10265
-quando for CRÉDITO BANCÁRIO a conta "DEBITO" = 10265
-quando for CHEQUE A VISTA a conta "DEBITO" = 10267
+quando '3 agrupamento' for 'DUPLICATA' a conta "DEBITO" = 10265
+quando '3 agrupamento' for 'CRÉDITO BANCÁRIO' a conta "DEBITO" = 10265
+quando '3 agrupamento' for 'CHEQUE A VISTA' a conta "DEBITO" = 10267
 
 4 agrupamento
-quando for "Carteira Cobrança Simples" a conta "DEBITO" = 45534
-quando for "Cart Credito Garantia" a conta "DEBITO" = 344640
+quando 4 agrupamento for "Carteira Cobrança Simples" a conta "DEBITO" = 45534
+quando 4 agrupamento for "Cart Credito Garantia" a conta "DEBITO" = 344640
 
-DESCRIÇÃO
-quando na DESCRIÇÃO = "RC*" a conta a CRÉDITO = 31472
----
 3 agrupamento
-quando 3 agrupamento for Cartão de Crédito e 4 agrupamento=vazio faça = Cart Hipercard Pagseguro;10221
-quando 3 agrupamento for Cartão de Débito e 4 agrupamento=vazio faça = Cart Maestro Pagseguro;10221
+quando '3o. Agrupamento' for = 'DUPLICATA' faça '3o. Agrupamento' + 'CLIENTE' em 'HISTORICO'
+quando '3o. Agrupamento' for = 'CRÉDITO BANCÁRIO' faça '3o. Agrupamento' + 'CLIENTE' em 'HISTORICO'
+quando '3o. Agrupamento' for = 'CHEQUE A VISTA' faça '3o. Agrupamento' + 'CLIENTE' em 'HISTORICO'
 
-Obs.:1 Conta a DEBITO = 10221 para 'Cartão de Crédito' e 'Cartão de Débito'.
-Obs.:2 Retirar as aspas que fica na coluna HISTORICO.
+HISTORICO
+A coluna 'HISTORICO' = '10.01' + 'DESCRIÇÃO'
+
+31/03/2022
+3 agrupamento
+quando '3 agrupamento' for Cartão de Crédito e '4 agrupamento' = vázio faça = Cart Hipercard Pagseguro;10221 em '4 agrupamento'
+quando '3 agrupamento' for Cartão de Débito e '4 agrupamento' = vázio faça = Cart Maestro Pagseguro;10221 em '4 agrupamento'
+
+DEBITO
+Conta a 'DEBITO' = '10221' para 'Cartão de Crédito' e 'Cartão de Débito'.
+
+18/04/2022
+DESCRIÇÃO
+quando 'DESCRIÇÃO' = "RC*" a conta a 'CRÉDITO' = 31472
+
+19/04/2022
+Obs.:1- Retirar as aspas no CSV de saida.
+Obs.:2- Não salvar o CSV com os titulos das colunas.
+
+05/05/2022
+Acrescentar as iformações da coluna '4. agrupamento' antes da 'HISTORICO'.
+Salvar o CSV separado por ; para Excel.
+
+06/05/2022
+Excluir as iformações da coluna '4. agrupamento' antes da 'HISTORICO'.
+O '10.01' fica depois da coluna 'VALOR' não componhe a coluna 'HISTORICO'
 
 ---------------------------------------------------------------
-Obs.: Não salvar o CSV com os titulos das colunas
 
 3 agrupamento
 DUPLICATA = 10265
@@ -164,12 +174,16 @@ Cart Mastercard Pagseguro = 10221
 Cart Hiper Crédito Pagseguro = 10221
 Cart Stone Hipercard = 10221
 Cart Maestro Pagseguro = 10221
-
 ----------------------------------
-3 agrupamento
-quando for Cartão de Crédito e 4 agrupamento=vazio faça = Cart Hipercard Pagseguro;10221
-quando for Cartão de Débito e 4 agrupamento=vazio faça = Cart Maestro Pagseguro;10221
-
-Obs.:1 conta a DEBITO = 10221 para 'Cartão de Crédito' e 'Cartão de Débito'.
-
-Obs.:2, Retirar as aspas no CSV de saida.
+-Uma dúvida o "4o. Agrupamento" você utiliza?
+--é extamente no grupo 4 que vem as contas
+veja:
+Cart Fortbrasil;511077
+o nome "Cart Fort brasil", passamos pra maiúsculo e colocamos como 1 histórico
+após o código 10.01
+a conta que vem ao lado do nome a gente separa e cola na conta a débito logo após a data
+-
+tipos de excessões que poderão vir no grupo3
+DPL - 10265
+CRÉDITO BANCÁRIO - 10265
+CHEQUE  - 10267
