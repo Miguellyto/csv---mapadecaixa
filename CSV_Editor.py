@@ -15,9 +15,9 @@ def UploadAction():
     mapadecaixa = pd.read_csv(filename, encoding='ANSI', sep=',', header=0, thousands = '.', decimal = ',', dtype = {'Valor':np.float64})
 
     for index, row in mapadecaixa.iterrows():
-        if row['3o. Agrupamento'] == 'Cartão de Crédito':
+        if row ['3o. Agrupamento'] == 'Cartão de Crédito' and mapadecaixa['4o. Agrupamento'].isnull().values.any():
             mapadecaixa.loc[index, '4o. Agrupamento'] = 'Cart Hipercard Pagseguro;10221'
-        elif row['3o. Agrupamento'] == 'Cartão de Débito':
+        elif row['3o. Agrupamento'] == 'Cartão de Débito' and mapadecaixa['4o. Agrupamento'].isnull().values.any():
             mapadecaixa.loc[index, '4o. Agrupamento'] = 'Cart Maestro Pagseguro;10221'
 
     mapadecaixa[['4o. Agrupamento','DEBITO']] = mapadecaixa['4o. Agrupamento'].str.split(';', expand=True)
@@ -32,42 +32,46 @@ def UploadAction():
     for index, row in mapadecaixa.iterrows():
         if row['4o. Agrupamento'] == 'Carteira Cobrança Simples':
             mapadecaixa.loc[index, 'DEBITO'] = '45534'
-        elif row['4o. Agrupamento'] == 'Cart Credito Garantia':
+        if row['4o. Agrupamento'] == 'Cart Credito Garantia':
             mapadecaixa.loc[index, 'DEBITO'] = '344640'
+        elif row['3o. Agrupamento'] == 'Dinheiro':
+            mapadecaixa.loc[index, 'DEBITO'] = '45534'
 
-    mapadecaixa['CREDITO'] = '10164' 
+    mapadecaixa['CREDITO'] = '10164'
+    mapadecaixa['HIST.cod'] = '10.01'
     for index, row in mapadecaixa.iterrows():
         if row['Descrição'].startswith('RC'):
             mapadecaixa.loc[index, 'CREDITO'] = '31472'
 
-    mapadecaixa['NEWCOLUN'] = ''
     for index, row in mapadecaixa.iterrows():
         if row['3o. Agrupamento'] == 'Duplicata':
-            mapadecaixa.loc[index,'NEWCOLUN'] =  str(mapadecaixa.loc[index,'3o. Agrupamento']) + ' - ' + str(mapadecaixa.loc[index,'Cliente'])
+            mapadecaixa.loc[index,'4o. Agrupamento'] =  str(mapadecaixa.loc[index,'3o. Agrupamento']) + ' - ' + str(mapadecaixa.loc[index,'Cliente'])
         elif row['3o. Agrupamento'] == 'Crédito Bancário':
-            mapadecaixa.loc[index,'NEWCOLUN'] =  str(mapadecaixa.loc[index,'3o. Agrupamento']) + ' - ' + str(mapadecaixa.loc[index,'Cliente'])
+            mapadecaixa.loc[index,'4o. Agrupamento'] =  str(mapadecaixa.loc[index,'3o. Agrupamento']) + ' - ' + str(mapadecaixa.loc[index,'Cliente'])
         elif row['3o. Agrupamento'] == 'Cheque à vista':
-            mapadecaixa.loc[index,'NEWCOLUN'] =  str(mapadecaixa.loc[index,'3o. Agrupamento']) + ' - ' + str(mapadecaixa.loc[index,'Cliente'])
+            mapadecaixa.loc[index,'4o. Agrupamento'] =  str(mapadecaixa.loc[index,'3o. Agrupamento']) + ' - ' + str(mapadecaixa.loc[index,'Cliente'])
 
     mapadecaixa['FILIAL'] = ''
-    mapadecaixa['HISTORICO'] = '10.01'+ "," + mapadecaixa['NEWCOLUN']+ "," + mapadecaixa['Descrição']
-    mapadecaixa['HISTORICO'] = mapadecaixa['HISTORICO'].astype(str)
-    mapadecaixa['HISTORICO'] = mapadecaixa['HISTORICO'].str.replace(',,', ',')
-    mapadecaixa['HISTORICO'] = mapadecaixa['HISTORICO'].str.upper()
     mapadecaixa['4o. Agrupamento'] = mapadecaixa['4o. Agrupamento'].str.upper()
 
-    mapadecaixa = mapadecaixa.drop(['3o. Agrupamento','Descrição','Cliente', 'NEWCOLUN'], axis=1)
+    mapadecaixa = mapadecaixa.drop(['3o. Agrupamento','Cliente'], axis=1)
 
-    colunas = {'Emissão':'DATA','Valor':'VALOR'}
+    colunas = {'Emissão':'DATA','Valor':'VALOR', '4o. Agrupamento':'HIST.p1', 'Descrição':'HIST.p2'}
     mapadecaixa.rename(columns = colunas, inplace=True) 
 
-    new_ordem_colls = ['FILIAL', 'DATA', 'DEBITO', 'CREDITO', 'VALOR', '4o. Agrupamento', 'HISTORICO']
+    new_ordem_colls = ['FILIAL', 'DATA', 'DEBITO', 'CREDITO', 'VALOR', 'HIST.cod', 'HIST.p1', 'HIST.p2']
     mapadecaixa = mapadecaixa[new_ordem_colls]
 
     filial = en.get()
     mapadecaixa['FILIAL'] = filial
-    mapadecaixa.to_csv('Filial_'+filial+' - MapaCaixa.csv', encoding='latin-1', header=False, index=False) 
-    LinhasEmBranco = "Existem:(",mapadecaixa['DEBITO'].isnull().sum(),")","Contas em branco na coluna DÉBITO"
+    
+    for index, row in mapadecaixa.iterrows():
+        if row['HIST.p1'].startswith('CRÉDITO BANCÁRIO'):
+            mapadecaixa.loc[index, 'DEBITO'] = '10265'
+
+    mapadecaixa.to_csv('Filial_'+filial+' - MapaCaixa.csv', sep=';', encoding='latin-1', header=False, index=False) 
+    # mapadecaixa.to_csv('Filial_'+filial+' - MapaCaixa.csv', encoding='latin-1', header=False, index=False) 
+    LinhasEmBranco = "Existem:(",mapadecaixa['DEBITO'].isnull().sum(),")","Conta(s) em branco na coluna DÉBITO"
     print(LinhasEmBranco)
 
 root = Tk()
