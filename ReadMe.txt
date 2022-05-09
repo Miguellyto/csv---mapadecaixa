@@ -203,12 +203,30 @@ Que deve trazer no hist.p1 CREDITO BANCARIO + CLIENTE
 deve-se fazer uma escrita = ao DEBITO 10267
 -------------
 NA SUA COLUNA DE DEBITO QUANDO FIZER O FILTRO NA LOJA 880 TEM QUE TER AS SEGUINTES CONTAS
-10221
-10225
-10265
-10267
-45534
-45764
-344640
-511077
-91392315
+--DEBITO--
+1- 10221
+2- 10225
+3- 10265
+4- 10267
+5- 45534
+6- 45764
+7- 344640
+8- 511077
+8- 91392315
+-------------
+
+widgets.FileUpload(
+    accept='',  # Accepted file extension e.g. '.txt', '.pdf', 'image/*', 'image/*,.pdf'
+    multiple=False  # True to accept multiple files upload else False
+)
+---
+button = widgets.Button(  
+    description='Converter CSV',  
+)  
+button 
+---
+    title_textbox = widgets.Text(  
+        value = '',  
+        description = 'Title:',  
+    )  
+    title_textbox  
