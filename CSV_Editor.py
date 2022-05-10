@@ -68,6 +68,8 @@ def UploadAction():
     for index, row in mapadecaixa.iterrows():
         if row['HIST.p1'].startswith('CRÉDITO BANCÁRIO'):
             mapadecaixa.loc[index, 'DEBITO'] = '10265'
+        if row['HIST.p1'].startswith('DUPLICATA'):
+            mapadecaixa.loc[index, 'DEBITO'] = '10267'
 
     mapadecaixa.to_csv('Filial_'+filial+' - MapaCaixa.csv', sep=';', encoding='latin-1', header=False, index=False) 
     # mapadecaixa.to_csv('Filial_'+filial+' - MapaCaixa.csv', encoding='latin-1', header=False, index=False) 
