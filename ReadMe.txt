@@ -1,3 +1,9 @@
+ Os arquivos: CSV_Editor.py e CSV_Editor.pyw
+ contem o código final do CSV_Editor e o CSV_Editor.ipynb
+ é utilizado para testar os código dos files acima.
+
+ Iniciar o jupyter: jupyter notebook 
+ 
  - OS ARQUIVOS:  app.py  que é o principal, app - Copia.py, SEUS CÓDIGOS DIZ RESPEITO AO DESENVOVIMENTO DA APLICAÇÃO WEB EM FLASK.
 
  AS DEFINIÇÕES ABAIXO SE REFERE AO ARQUIVO: app2 copy.ipynb que é o principal, app2.ipynb, e CSV_Editor.py
