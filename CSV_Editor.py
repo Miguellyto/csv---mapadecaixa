@@ -71,6 +71,9 @@ def UploadAction():
         if row['HIST.p1'].startswith('DUPLICATA'):
             mapadecaixa.loc[index, 'DEBITO'] = '10265'
 
+    # mapadecaixa['VALOR'] = mapadecaixa['VALOR'].astype(str)
+    mapadecaixa['VALOR'] = mapadecaixa['VALOR'].astype('string')
+
     mapadecaixa.to_csv('Filial_'+filial+' - MapaCaixa.csv', sep=';', encoding='latin-1', header=False, index=False) 
     # mapadecaixa.to_csv('Filial_'+filial+' - MapaCaixa.csv', encoding='latin-1', header=False, index=False) 
     LinhasEmBranco = "Existem:(",mapadecaixa['DEBITO'].isnull().sum(),")","Conta(s) em branco na coluna DÉBITO"
