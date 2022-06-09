@@ -225,13 +225,53 @@ AVG(preco_Livro) AS PreçoMédio,
 SUM(preco_Livro) AS Total 
 FROM tbl_Livros;
 
---Exibir apenas registro que contem a letra R
-SELECT COUNT(*) FROM tbl_Autores WHERE Nome_Autor LIKE 'r%';
-
 --Seleção de intervalos BETWEEN
 SELECT * FROM tbl_Livros
 WHERE Data_Pub BETWEEN '20040517' AND '20100517';
 SELECT Nome_Livro AS Livro, Preco_Livro AS Preço
 FROM tbl_Livros
-WHERE Preco_Livro BETWEEN 40.00 AND 60.00
+WHERE Preco_Livro BETWEEN 40.00 AND 60.00;
+
+SELECT * FROM tbl_livros
+WHERE Data_Pub BETWEEN '20000101' AND '20050101'
+OR Data_Pub BETWEEN '20100101' AND '20140101'
+AND Preco_Livro > 50.00
+ORDER BY Data_Pub DESC
+
+--Os operadores LIKE e NOT LIKE para fazer pesquisa
+--Nomes de livros que começa com a letra 'S'
+SELECT Nome_Livros FROM tbl_Livros
+WHERE Nome_Livros LIKE 'S%'
+
+--Nomes de livros que termina com a letra 'G'
+SELECT Nome_Livros FROM tbl_Livros
+WHERE Nome_Livros LIKE '%g'
+
+--Conta quantos livros que começa com a letra 'R'
+SELECT COUNT(*) FROM tbl_Autores 
+WHERE Nome_Autor LIKE 'r%'
+
+--Quantos livros que a segunda letra é a 'i'
+SELECT Nome_Livro FROM tbl_Livros
+WHERE Nome_Livro LIKE '_i%'
+
+--Pesquisa os livros que começa com a letra 'S' ou 'L' independente do que vem depois.
+SELECT Nome_Livro FROM tbl_Livros
+WHERE Nome_Livro LIKE '[SL]%'
+
+--Pesquisa os livros que terminam com a letra 'G' ou 'L' independente do que vem no inicio.
+SELECT Nome_Livro FROM tbl_Livros
+WHERE Nome_Livro LIKE '%[GL]'
+
+--Pesquisa os livros que a segunda letra seja 'i' ou 's' independente do que vem depois.
+SELECT Nome_Livro FROM tbl_Livros
+WHERE Nome_Livro LIKE '_[is]%'
+
+--
+SELECT Nome_Livro FROM tbl_Livros
+WHERE Nome_Livro LIKE '_i__o%'
+
+--Pesquisa todos os livros que não começa com a letra 'M'
+SELECT Nome_Livro FROM tbl_Livros
+WHERE Nome_Livro NOT LIKE 'M%'
 
