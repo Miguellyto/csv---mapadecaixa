@@ -1,4 +1,11 @@
 --Criando o Banco Biblioteca
+SQL
+LE005TIC02\SQLEXPRESS
+LASER\lmiguel
+
+--USE ecommerce
+--sp_helpdb ecommerce
+
 CREATE DATABASE db_Biblioteca
 ON PRIMARY (NAME=db_Biblioteca,
 FILENAME='C:\SQL\db_Biblioteca.MDF',
@@ -176,11 +183,19 @@ FROM tbl_Livros
 
 --Alias AS 
 SELECT Nome_Livro AS Livro, Preco_Livro AS 'Preço do Livro'
-FROM tbl_livros;
+FROM tbl_livros
+
+--Sintaxe de alias para colunas e tabelas
+SELECT A.Nome_Livro AS Livro, A.Preco_Livro AS 'Preço do Livro'
+FROM tbl_livros AS A;
 
 --Podemos aplicar um alias a uma coluna sem a necessidade de usar a palavra AS, 
 SELECT Nome_Livro Livro, Preco_Livro 'Preço do Livro'
-FROM tbl_livros;
+FROM tbl_livros
+
+--
+SELECT A.Nome_Livro Livro, A.Preco_Livro 'Preço do Livro'
+FROM tbl_livros A;
 
 --Utilizando o UNION. As 2 tabelas tem que ter o mesmo numero de linhas
 SELECT ID_Autor FROM tbl_Autores
@@ -275,3 +290,19 @@ WHERE Nome_Livro LIKE '_i__o%'
 SELECT Nome_Livro FROM tbl_Livros
 WHERE Nome_Livro NOT LIKE 'M%'
 
+--Selecionar dados de 2/mais tabelas: 'JOIN', 'INNER JOIN' e 'OUTER JOIN'
+SELECT * FROM tbl_Livros
+INNER JOIN tbl_Autores
+ON tbl_livros.ID_Autor = tbl_Autores.ID_Autor --O ponto de ligação é a pk de um tabela com a fk da outra.
+
+SELECT tbl_Livros.Nome_Livro, tbl_Livros.ISBN,
+TBL_Autores.Nome_Autor
+FROM tbl_Livros
+INNER JOIN tbl_Autores
+ON tbl_Livros.ID_Autor = tbl_Autores.ID_Autor
+
+--Usando Alias 'AS'
+SELECT L.Nome_Livro, E.Nome_Editora
+FROM tbl_Livros AS L
+INNER JOIN tbl_Editoras AS E
+ON L.ID_Editora = E.ID_Editora
