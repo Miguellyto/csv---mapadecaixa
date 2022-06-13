@@ -4,7 +4,7 @@ LE005TIC02\SQLEXPRESS
 LASER\lmiguel
 
 --USE ecommerce
---sp_helpdb ecommerce
+sp_helpdb ecommerce
 
 CREATE DATABASE db_Biblioteca
 ON PRIMARY (NAME=db_Biblioteca,
@@ -14,20 +14,30 @@ MAXSIZE=10MB,
 FILEGROWTH=10%
 );
 
-USE db_Biblioteca;
+USE db_Biblioteca
 
 --LISTA OS BANCOS DE DADOS E DATALHES
---- EXEC sp_databases / sp_databases
---- EXEC sp_helpdb / sp_helpdb
---- SELECT * FROM sys.databases
---- SELECT * FROM sys.sysdatabases
---- SELECT name, database_id, create_date FROM sys.databases;  
+EXEC sp_databases / sp_databases
+EXEC sp_helpdb / sp_helpdb
+SELECT * FROM sys.databases
+SELECT * FROM sys.sysdatabases
+SELECT name, database_id, create_date FROM sys.databases
+--Collation - Agrupamento de Caracteres ou Colação
+SELECT * FROM fn_helpcollations()
+SELECT SERVERPROPERTY('Collation') AS 'Colecao Usada no Banco'
+--obs.: Latin1_General_CI_AS
+--CI = A Case Insencitive.
+--AS = faz difereça entre palavras com e em acentos.
+
+--Alterar o Collation do Banco de Dados
+ALTER DATABASE db_Biblioteca
+COLLATE Latin1_General_CI_AS
 
 --LISTA DATALHES DA TABELA
---- sp_helpdb db_Biblioteca
+sp_helpdb db_Biblioteca
 
 --LISTA DATALHES DA TABELA
---- sp_help tbl_Livros
+sp_help tbl_Livros
 
 -- Criando a Tabela LIvro
 CREATE TABLE tbl_Livros
@@ -114,13 +124,13 @@ INSERT INTO tbl_Editoras (Nome_Editora)
 VALUES ('Prentice Hall');
 
 --Inserindo Dados na Tabela Livros
-INSERT INTO tbl_Livro (Nome_Livro, ISBN, Data_Pub, Preco_Livro, ID_Editora)
+INSERT INTO tbl_Livros (Nome_Livro, ISBN, Data_Pub, Preco_Livro, ID_Editora)
 VALUES ('Linux Command LIne and Shel Scripting', 1438566969, '20091221', 68.35,5,4);
 
-INSERT INTO tbl_Livro (Nome_Livro, ISBN, Data_Pub, Preco_Livro, ID_Editora)
+INSERT INTO tbl_Livros (Nome_Livro, ISBN, Data_Pub, Preco_Livro, ID_Editora)
 VALUES ('SSH, THE Secure Shell', 127658789, '20091221', 58.30,1,2);
 
-INSERT INTO tbl_Livro (Nome_Livro, ISBN, Data_Pub, Preco_Livro, ID_Editora)
+INSERT INTO tbl_Livros (Nome_Livro, ISBN, Data_Pub, Preco_Livro, ID_Editora)
 VALUES ('Using Samba', 123856789, '20001221', 61.45,2,2);
 
 INSERT INTO tbl_Livros (Nome_Livro, ISBN, Data_Pub, Preco_Livro, ID_Autor, ID_Editora)
@@ -162,7 +172,7 @@ SELECT ID_Autor FROM tbl_Autores WHERE Sobrenome_Autor='Stanek';
  SELECT * FROM tbl_Livros
  WHERE ID_Livro > 2 OR ID_Autor <3;
 
---Utilizando o UPDATE
+--Utilizando o UPDATE atualizando registros
 UPDATE tbl_Livros 
 SET preco_Livro = 65.45
 WHERE ID_Livro = 102;
@@ -306,3 +316,96 @@ SELECT L.Nome_Livro, E.Nome_Editora
 FROM tbl_Livros AS L
 INNER JOIN tbl_Editoras AS E
 ON L.ID_Editora = E.ID_Editora
+
+--LEFT e RIGHT - Selecionar dados de várias tabelas - SQL Server
+SELECT * FROM tbl_Autores --tabela da esquerda
+LEFT JOIN tbl_Livros --tabela da direita
+ON tbl_Livros.ID_Autor = tbl_Autores.ID_Autor
+
+--LEFT JOIN excluindo correspondências
+SELECT * FROM tbl_Autores --tabela da esquerda
+LEFT JOIN tbl_Livros --tabela da direita
+ON tbl_Livros.ID_Autor = tbl_Autores.ID_Autor
+WHERE tbl_Livros.ID_Autor IS NULL --lista os registro que não tem correspondencia com a tabela da direita (Quando o ID do Autor for NULL)
+
+--RIGHT JOIN - Trasendo dados da tabela da direita
+SELECT * FROM tbl_Livros AS L
+RIGHT JOIN tbl_Editoras AS E
+ON L.ID_Editora = E.ID_Editora
+
+--RIGHT JOIN excluindo correspondências
+SELECT * FROM tbl_Livros
+RIGHT JOIN tbl_Editoras
+ON tbl_Livros.ID_Editora = tbl_Editoras.ID_Editora
+WHERE tbl_Livros.ID_Editora IS NULL
+
+--FULL JOIN - listas os dados mesmo não possuindo correspondencia entre si
+SELECT L.Nome_Livro, L.ID_Autor, A.Nome_Autor
+FROM tbl_Livros AS L
+FULL JOIN tbl_Autores AS A
+ON L.ID_Autor = A.ID_Autor
+
+--FULL JOIN - excluindo correspondências. Lista dados com o ID_Autor NULL.
+SELECT L.Nome_Livro, L.ID_Autor, A.Nome_Autor
+FROM tbl_Livros AS L
+FULL JOIN tbl_Autores AS A
+ON L.ID_Autor = A.ID_Autor
+WHERE L.ID_Autor IS NULL
+OR A.ID_Autor IS NULL
+
+-- IN - Filtro de Múltiplas condições.
+SELECT * FROM tbl_Livros
+WHERE ID_Autor IN (1, 2) --lista apenas os livros onde os id do autor for 1 e 2
+
+-- NOT IN - Filtro de Múltiplas condições.
+SELECT * FROM tbl_Livros
+WHERE ID_Autor NOT IN (1, 2) --lista todos os livros menos os IDs dos autores não seja 1 e 2
+
+--Campos Calculados - Cálculos - SQL Server
+CREATE TABLE Produtos (
+    codProduto smallint, 
+    NomeProduto varchar(20), 
+    Preco money, 
+    QTD smallint, 
+    Total As (Preco * QTD)
+    )
+
+-- Inserindo dados na tabela Produtos
+INSERT INTO Produtos VALUES (1, 'Mouse', 15.00, 2)
+INSERT INTO Produtos VALUES (2, 'Teclado', 18.00, 1)
+INSERT INTO Produtos VALUES (2, 'Fones', 25.00, 1)
+INSERT INTO Produtos VALUES (4, 'Pendrive', 30.00, 3)
+INSERT INTO Produtos VALUES (5, 'SD Card', 29.00, 2)
+INSERT INTO Produtos VALUES (6, 'DVD-R', 1.30, 12)
+
+--Somando tudo da coluna TOTAL
+SELECT SUM(Total) FROM Produtos
+
+--Criando Indeces
+--OBS.: Crie em tabelas que recebem muitas consultas. Tabelas indexadas levam mais tempo para serem atualizadas.
+CREATE INDEX indice_livro
+ON tbl_livros (Nome_Livro)
+
+--Criando Regras para que os preços dos livros seja sempre maior que 10.00
+--OBS.: não precisa usar: USE db_Biblioteca para criar a RULE.
+CREATE RULE rl_preco AS @VALOR > 10.00
+
+--Aplicando a REGRA. Vinculando a RULE a uma tabela.
+EXECUTE sp_bindrule rl_preco, 'tbl_Livros.Preco_Livro'
+
+--Testando a regra
+UPDATE tbl_livros
+SET Preco_Livro = 50.00
+WHERE ID_Livro = 105
+
+UPDATE tbl_livros
+SET Preco_Livro = 9.90
+WHERE ID_Livro = 101
+
+--Backup do Banco de Dados e Restauração - SQL Server
+BACKUP DATABASE db_Biblioteca
+TO DISK = 'C:\BKP DESKTOP\MAPA DE CAIXA\csv - mapadecaixa\db_Biblioteca.bak';
+
+--Concatenando Strings
+SELECT Nome_autor + ' ' + Sobrenome_autor AS 'Nome Completo' FROM tbl_Autores 
+
