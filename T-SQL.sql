@@ -409,3 +409,113 @@ TO DISK = 'C:\BKP DESKTOP\MAPA DE CAIXA\csv - mapadecaixa\db_Biblioteca.bak';
 --Concatenando Strings
 SELECT Nome_autor + ' ' + Sobrenome_autor AS 'Nome Completo' FROM tbl_Autores 
 
+-- Cláusula WITH TIES
+SELECT TOP(5) WITH TIES Nome_Livro, Preco_Livro
+FROM tbl_livros
+ORDER BY preco_livro DESC
+
+--VIEWS (Exibições) - Criar, Alterar e Excluir
+--Ex.:
+CREATE VIEW [Nome_Exibição]
+AS SELECT colunas
+FROM tabela
+WHERE condições
+
+CREATE VIEW vw_LivrosAutores
+AS SELECT tbl_Livros.Nome_Livro AS Livro,
+tbl_Autores.Nome_Autor AS Autor
+FROM tbl_Livros
+INNER JOIN tbl_Autores
+ON tbl_Livros.ID_Autor = tbl_Autores.ID_autor
+
+--Usando a VIEW
+SELECT Livro, Autor
+FROM vw_LivrosAutores
+--WHERE Livro LIKE 's%'
+
+--Alteração da Views. Acrescentando a coluna VALOR.
+ALTER VIEW vw_LivrosAutores AS 
+SELECT tbl_Livros.Nome_Livro AS Livro, 
+tbl_Autores.Nome_Autor AS Autor, Preco_Livro AS Valor,
+FROM tbl_Livros
+INNER JOIN tbl_Autores
+ON tbl_Livros.ID_Autor = tbl_Autores.ID_Autor
+
+--Usando a VIEW
+SELECT * FROM vw_LivrosAutores
+
+--Excluindo a VIEW
+DROP VIEW vw_LivosAutores
+
+--Subconsultas (subqueries) com Tabelas Derivadas
+SELECT Resultado.Cliente, SUM(Resultado.Total) AS Total
+FROM
+(SELECT CL.Nome_Cliente AS Cliente, PR.Preco_Produto * CO.Quantidade AS Total
+FROM Cliente AS CL 
+INNER JOIN Compras AS CO
+ON CL.ID_Cliente = CO.ID_Cliente
+INNER JOIN Produtos AS PR
+ON CO.ID_Produto = PR.ID_Produto) AS Resultado
+
+GROUP BY Resultado.Cliente
+ORDER BY Total
+
+--CTE - Common Table Expression (subconsultas). 
+---Listando a soma das compras dos clientes
+WITH ConsultaCTE (Cliente, Total)
+AS (SELECT CL.Nome_Cliente AS Cliente,
+PR.Preco_Produto * CO.Quantidade AS Total
+FROM Clientes AS CL 
+INNER JOIN Compras AS CO
+ON CL.ID_Cliente = CO.ID_Cliente
+INNER JOIN Produtos AS PR
+ON CO.ID.Produto = PR.ID_Produto)
+
+SELECT Cliente, SUM(Total) AS ValorTotal
+FROM ConsultaCTE
+GROUP BY Cliente
+ORDER By ValorTotal
+
+-- Variáveis - Declaração e atribuição de valores
+DECLARE @livro VARCHAR(38)
+SELECT @livro = nome_livro
+FROM tbl_livros
+WHERE ID_Livro = 101
+SELECT @livro AS 'Nome do Livro'
+
+--
+DECLARE @preco MONEY, @quantidade INT, @nome VARCHAR(30)
+SET @quantidade = 5
+
+SELECT @preco = Preco_Livro, @nome = Nome_Livro
+FROM tbl_livros
+WHERE ID_Livro = 101
+
+SELECT @nome AS 'Nome do Livro', @preco * @quantidade AS 'Preço dos Livros'
+
+--Conversão de Tipos de Dados no SQL Server com Cast e Convert
+---http://msdn.microsoft.com/pt-br/library/ms187928.aspx
+SELECT 'A data de publicação ' +
+CONVERT(VARCHAR(18),Data_Pub, 103)
+FROM tbl_livro
+WHERE ID_Livro = 102
+
+--Stored Procedures - Criação e Execução
+CREATE PROCEDURE p_LivroValor
+AS
+SELECT Nome_Livro, preco_livro
+FROM tbl_livros
+
+--Execultando o Stored Procedures
+EXEC p_LivroValor
+
+--Verificando o código de criação do Stored Procedures
+EXEC sp_helptext p_LivroValor
+
+--Criando um Stored Procedures Criptografado
+---OBS.: O Stored Procedures Criptografado não pode ser visto com o comando: EXEC sp_helptext p_LivroISBN.
+CREATE PROCEDURE p_LivroISBN
+WITH ENCRYPTION
+AS
+SELECT Nome_Livro, ISBN
+FROM tbl_Livros
