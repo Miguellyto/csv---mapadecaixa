@@ -1,4 +1,11 @@
 --Criando o Banco Biblioteca
+
+--Ação 	Standard https://docs.microsoft.com/pt-br/sql/ssms/sql-server-management-studio-keyboard-shortcuts?view=sql-server-ver16
+--COMENTA LINHA NO SQL STUDIO
+CTRL+K, CTRL+C --Transformar o texto selecionado em um comentário 	
+CTRL+K, CTRL + U --Remover comentário do texto selecionado 	
+CTRL + ; --COMENTA LINHA NO VSCODE
+
 SQL
 LE005TIC02\SQLEXPRESS
 LASER\lmiguel
@@ -519,3 +526,163 @@ WITH ENCRYPTION
 AS
 SELECT Nome_Livro, ISBN
 FROM tbl_Livros
+
+--Alteração e Parâmetros de Entrada: Stored Procedures
+ALTER PROCEDURE p_LivroValor
+(@ID SMALLINT)
+AS
+SELECT Nome_Livros as Livro, Preco_Livro as Preço
+FROM tbl_Livros
+WHERE ID_Livros = @ID
+
+--Testando a alteeração
+EXEC p_LivroValor 104
+
+--Stored Procedures - Parâmetros de Entrada 
+ALTER PROCEDURE p_LivroValor
+(@ID SMALLINT, @Preco money)
+AS
+SELECT Nome_Livro AS Livro, Preco_Livro AS Preço
+FROM tbl_Livros
+WHERE ID_Livro > @ID AND Preco_Livro > @Preco
+
+--Testando a alteeração
+EXEC p_LivroValor @ID = 103, @Preco = 60
+
+--Stored Procedures - Parâmetros de Entrada p2
+ALTER PROCEDURE p_LivroValor
+(@Quantidade SMALLINT, @id SMALLINT)
+AS
+SELECT Nome_Livro AS Livro, Preco_livro * @Quantidade AS Preço
+FROM tbl_Livros
+WHERE ID_Livro = @ID
+
+--Testando a alteeração
+EXEC p_LivroValor @ID = 104, @Quantidade = 10
+
+--Inserindo dados na Stored Procedures
+CREATE PROCEDURE p_insere_editora
+(@nome VARCHAR(50))
+AS
+INSERT INTO tbl_editoras (Nome_Editora)
+VALUES (@nome)
+
+--Testando a inserção de dados
+EXEC p_insere_editora @nome = 'Apress'
+--
+SELECT * FROM tbl_editoras
+
+--Stored Procedures - Parâmetros de Saída e RETURN
+CREATE PROCEDURE p_teste_valor_padrão(
+    @param1 INT,
+    @param2 VARCHAR(20) = 'Valor pradrão!')
+AS
+SELECT 'Valor do parâmetro 1:' + CAST(@param1 AS VARCHAR)
+SELECT 'Valor do parâmetro 2:' + @param2
+
+--Testando o Parâmetros de Saída e RETURN
+EXEC p_teste_valor_padrão 30
+EXEC p_teste_valor_padrão @param1 = 40, @param2 = 'Valor Modificado'
+
+--Stored Procedures - Parâmetros de Saída e RETURN p4
+ALTER PROCEDURE p_LivroValor (
+    @Quantidade SMALLINT, @Cod SMALLINT = -10,
+    @ID SMALLINT)
+AS
+--SET NOCOUNT ON
+IF @ID >= 100
+    BEGIN
+        SELECT Nome_Livro AS Livro,
+        preco_Livro * @Quantidade AS Preço
+    FROM tbl_Livros
+    WHERE ID_Livro = @ID 
+    RETURN 1
+    END
+ELSE
+    RETURN @Cod
+
+--Testando o Stored Procedures - Parâmetros de Saída e RETURN p4 CIMA:
+DECLARE @Codigo INT
+EXEC @Codigo = p_LivroValor @ID = 102, @Quantidade = 5
+PRINT @Codigo
+
+--Funções Definidas pelo Usuário - Valor de Tabela Embutida
+CREATE FUNCTION retorna_itens (@valor REAL)
+RETURNS table
+AS
+RETURN(
+    SELECT L.Nome_Livro, A.Nome_Autor, E.Nome_Editora
+    FROM tbl_Livros AS L
+    INNER JOIN tbl_Autores AS A
+    ON L.ID_Autor = A.ID_Autor
+    INNER JOIN tbl_Editoras AS E
+    ON L.ID_Editora = E.ID_Editora
+    WHERE L.Preco_Livro > @valor)
+
+--Testando as Funções Definidas pelo Usuário - Valor de Tabela Embutida
+SELECT Nome_Livro, Nome_Autor
+FROM retorna_itens(62.00)
+
+--Funções Definidas pelo Usuário - Valor de Tabela Embutida p2
+CREATE FUNCTION multi_tabela ()
+RETURNS @valores TABLE
+    (Nome_Livro VARCHAR(50),
+    Data_Pub DATETIME, Nome_Editora VARCHAR(50),
+    Preco_Livro MONEY)
+AS
+BEGIN
+INSERT @valores (Nome_Livro, Data_Pub, Nome_Editora, Preco_Livro)
+    SELECT L.Nome_Livro, L.Data_Pub, E.Nome_Editora, L.Preco_Livro
+    FROM tbl_Livros AS L
+    INNER JOIN tbl_Editoras AS E
+    ON L.ID_Editora = E.ID_Editora
+RETURN
+END
+
+--Testando a Funções Definidas pelo Usuário - Valor de Tabela Embutida p2
+SELECT * FROM multi_tabela()
+
+--Triggers - Criação e Testes dos modos After
+CREATE TRIGGER teste_trigger_after
+ON tbl_editoras
+AFTER INSERT
+AS
+PRINT 'Registro Inserido com Sucesso!'
+
+--Testando o Triggers
+INSERT INTO tbl_Editoras VALUES ('Cultura')
+--
+SELECT * FROM tbl_editoras
+
+--Triggers - Criação e Testes dos modos After p2
+CREATE TRIGGER trigger_after
+ON tbl_editoras
+AFTER INSERT
+AS
+INSERT INTO tbl_Autores VALUES(25,'Jose', 'da Silva')
+INSERT INTO tbl_Livros VALUES ('O Casino', '123456000', '20001010',77,25,2)
+
+--Testando o Triggers p2
+INSERT INTO tbl_Editoras VALUES ('Ed.Cultura')
+--
+SELECT * FROM tbl_editoras
+
+--Triggers - Criação e Testes dos modos insteadOF
+CREATE TRIGGER teste_trigger_insteadOF
+ON tbl_Autores
+INSTEAD OF INSERT
+AS
+PRINT 'A inserção disparou o Tigger INSTEADOF '
+
+--Testando o Triggers p2
+INSERT INTO tbl_Autores VALUES (26,'Belizario','Slva')
+--
+SELECT * FROM tbl_Autores
+
+--Excluindo um TRIGGER
+DROP TRIGGER teste_trigger_after
+
+
+--Backup do Banco de Dados e Restauração - SQL Server
+BACKUP DATABASE db_Biblioteca
+TO DISK = 'C:\BKP DESKTOP\MAPA DE CAIXA\csv - mapadecaixa\db_Biblioteca.bak';
