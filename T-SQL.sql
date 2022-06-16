@@ -682,7 +682,25 @@ SELECT * FROM tbl_Autores
 --Excluindo um TRIGGER
 DROP TRIGGER teste_trigger_after
 
+--Desabilitar e verificar Status de um TRIGGER
+ALTER TABLE tbl_Editoras
+DISABLE TRIGGER trigger_after
+
+--Habilitar e verificar Status de um TRIGGER
+ALTER TABLE tbl_Editoras
+ENABLE TRIGGER trigger_after
+
+--Verificar Status de um TRIGGER
+EXEC sp_helptrigger @tabname = tbl_editoras
+
+--Verificar TRIGGER no Banco de Dados
+USE db_Biblioteca
+SELECT * FROM sys.triggers
+WHERE is_disabled = 1 OR is_disabled = 0
+
+--
 
 --Backup do Banco de Dados e Restauração - SQL Server
 BACKUP DATABASE db_Biblioteca
-TO DISK = 'C:\BKP DESKTOP\MAPA DE CAIXA\csv - mapadecaixa\db_Biblioteca.bak';
+TO DISK = 'C:\BKP DESKTOP\MAPA DE CAIXA\csv - mapadecaixa\db_Biblioteca.bak'
+
