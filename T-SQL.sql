@@ -1,5 +1,6 @@
 --Criando o Banco Biblioteca
 
+-- https://db-engines.com/en/ranking
 --Ação 	Standard https://docs.microsoft.com/pt-br/sql/ssms/sql-server-management-studio-keyboard-shortcuts?view=sql-server-ver16
 --COMENTA LINHA NO SQL STUDIO
 CTRL+K, CTRL+C --Transformar o texto selecionado em um comentário 	
@@ -766,3 +767,4 @@ WHERE ID_autor = 10
 BACKUP DATABASE db_Biblioteca
 TO DISK = 'C:\BKP DESKTOP\MAPA DE CAIXA\csv - mapadecaixa\db_Biblioteca.bak'
 
+db-engines.com
