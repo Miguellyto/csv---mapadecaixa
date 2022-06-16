@@ -40,11 +40,8 @@ SELECT SERVERPROPERTY('Collation') AS 'Colecao Usada no Banco'
 ALTER DATABASE db_Biblioteca
 COLLATE Latin1_General_CI_AS
 
---LISTA DATALHES DA TABELA
+--LISTA DATALHES DO BANCO DE DADOS
 sp_helpdb db_Biblioteca
-
---LISTA DATALHES DA TABELA
-sp_help tbl_Livros
 
 -- Criando a Tabela LIvro
 CREATE TABLE tbl_Livros
@@ -69,6 +66,34 @@ CREATE TABLE tbl_Editoras(
     Nome_Editora VARCHAR(50) NOT NULL
 );
 
+--Tipo de dado TIME no SQL Server - Armazenar horários em uma tabela
+CREATE TABLE tbl_visitas
+(id_visita INT PRIMARY KEY IDENTITY,
+nome_visitante VARCHAR(50) NOT NULL,
+CPF VARCHAR(11) NOT NULL,
+APT_visitado SMALLINT NOT NULL,
+data_visita DATE NOT NULL,
+hora_entr TIME(0) NOT NULL,
+hora_sai TIME(0) not NULL);
+
+--Inserindo dados na tbl_visitas
+INSERT INTO tbl_visitas(
+    nome_visitante,CPF,APT_visitado,data_visitada,hora_entr,hora_sai
+)
+VALUES(
+    'Fábio dos Reis',
+    '123654897',
+    19,
+    GETDATE(),
+    '14:05:00',
+    '18:10:00'
+)
+
+--Verificando quanto tempo do visitante 
+SELECT DATEDIFF(MINUTE,hora_entr,hora_sai) AS Permanencia
+FROM tbl_visitas
+
+
 --SELECT * FROM tbl_Livros
 --Excluíndo Colunas
 USE db_Biblioteca
@@ -90,7 +115,25 @@ REFERENCES tbl_Editoras;
 
 --Alterando Coluna
 ALTER TABLE tbl_Livros
-ALTER COLUMN ID_Autor SMALLINT;
+ALTER COLUMN ID_Autor SMALLINT
+
+--LISTA DATALHES DA TABELA
+sp_help tbl_Livros
+
+--LISTANDO TABELAS DO BANCO DE DADOS
+SELECT * FROM sys.tables
+
+--Renomeando Coluna
+sp_rename 'tbl_Livros.Nome_Livro', 'Livro', 'COLUMN'
+
+--Consultando a tbl_Lviros
+SELECT * FROM tbl_Livros
+
+--Renomeando a Tabela
+sp_rename 'tbl_Livros', 'Livros'
+
+--Consultando a tbl_Lviros
+SELECT * FROM Livros
 
 --Excluíndo Tabela
 DROP TABLE tbl_Livros;
@@ -697,6 +740,25 @@ EXEC sp_helptrigger @tabname = tbl_editoras
 USE db_Biblioteca
 SELECT * FROM sys.triggers
 WHERE is_disabled = 1 OR is_disabled = 0
+
+--Triggers - Determinar colunas alteradas e função update()
+CREATE TRIGGER trigger_after_autores
+ON tbl_Autores
+AFTER INSERT, UPDATE
+AS
+IF UPDATE(nome_autor)
+    BEGIN
+        PRINT 'O nome do autor foi alterado'
+    END
+ELSE
+    BEGIN
+        PRINT 'Nome não foi modificado'
+    END
+
+--Testando o Triggers - Determinar colunas alteradas e função update()
+UPDATE tbl_Autores
+SET nome_autor = 'João'
+WHERE ID_autor = 10
 
 --
 
