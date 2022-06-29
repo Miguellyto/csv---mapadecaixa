@@ -1,0 +1,34 @@
+remote: error: GH001: Large files detected. You may want to try Git Large File Storage - https://git-lfs.github.com. 
+
+https://git-lfs.github.com/
+
+error: RPC failed; curl 92 HTTP/2 stream 0 was not closed cleanly: CANCEL (err 8)
+
+Solução simples (reverte para http 2 depois):
+git config --global http.version HTTP/1.1
+git push 
+git config --global http.version HTTP/2
+---------------
+ALMENTADO O TAMANHO DO postBuffer
+git config --global http.postBuffer 524288000
+---------------
+
+Remover arquivo muito grande que foi no commit
+
+Recentemente passei por este problema, estava trabalhando em um projeto de IA onde muitos arquivos excedem os 100 Mb do Github, assim como em outros reposítorios.
+O problema que fiz o git add, e git commit com os arquivos superiores ao limite e depois de tentar fazer o push algumas vezes comecei a ter problema para resolver.
+
+A solução foi:
+git filter-branch --tree-filter 'rm -rf pasta/seuarquivo' HEAD
+git push
+
+Ou para a pasta toda e sub arquivos:
+git filter-branch --tree-filter 'rm -rf pasta/subasta/' HEAD
+git push
+
+Quem sabe você tenha mais de um commit e precise forçar a limpeza, aí basta inserir o -f depois do filter-brach, desta forma :
+git filter-branch -f --tree-filter 'rm -rf pasta/subasta/' HEAD
+
+
+git rm --cached 'Live #009 - Como conectar Power Bi no PostgreSQL _ Consultoria Resolvendo a Falh.mp4'
+git commit -m 'Live #009 - Como conectar Power Bi no PostgreSQL _ Consultoria Resolvendo a Falh.mp4'

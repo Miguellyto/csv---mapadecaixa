@@ -3,6 +3,7 @@ syht2.onmicrosoft.com
 Administrador
 Miguellyto@syht2.onmicrosoft.com
 
+
 Públicar na web Cod:
 -Link para enviar para as pessoas visualizarem o relatorio PowerBI
 https://app.powerbi.com/view?r=eyJrIjoiZDljMTFmMmEtOTExYi00ZTViLWExMjEtYWVmNjdhZDVkZDkwIiwidCI6IjRlZjgwMGIwLTExYzQtNDk1Yy04MWJhLTllOTg1NDU2MzMwZiJ9
@@ -20,6 +21,21 @@ https://login.microsoftonline.com/common/oauth2/v2.0/logout?post_logout_redirect
 icon
 https://www.flaticon.com/?k=1627074469818
 
+
+PARA CONECTAR O POWER BI AO POSTGRE SQL ESCOLHER ODBC E NÃO POSTGRE
+String de Conexão
+Driver={PostgreSQL ANSI(x64)}; Server= IP ; Port= Porta; Database= Nome do banco de dados
+
+OBS.: Instalar o psqlodbc_13_02_0000-x64
+---arquivo disponivel nesta pasta.
+---https://www.postgresql.org/ftp/odbc/versions/msi/
+Driver={PostgreSQL ANSI(x64)}; Server= 127.0.0.1; Port= 5432; Database= ecommerce
+
+OUTRO DRIVE DE CONEXÃO:
+Driver={PostgreSQL ODBC Driver(UNICODE)};Server=127.0.0.1;Port=5432;Database=ecommerce;UID=postgres;PWD=root
+
+----------------------------------------------------------------------------------------------------------------
+
 Análise Descritiva: avalia os dados por meio de um processo conhecido como EDA (análise exploratória de dados). 
 Análise Preditiva: é usada no machine learning para aplicar técnicas de modelagem que possam detectar anomalias ou padrões.
 
@@ -33,21 +49,3 @@ Analista de Dados:_
 Cientista de Dados: 
 --examina os dados para determinar as perguntas que precisam de respostas e, geralmente, desenvolve uma hipótese ou um experimento.
 
-1 - Qual função de dados habilita funcionalidades de análise avançada por meio de relatórios e visualizações?
-Analista de dados
-2 - Qual tarefa de Analista de dados tem um impacto crítico no desempenho da análise e do relatório de dados?
-Modelar 
-3 - Qual das opções a seguir é um benefício importante da análise de dados?
-Decisões empresariais informadas 
-5 - Quais dos seguintes itens são considerados blocos de construção básicos do Power BI?
-Visualizações, conjuntos de dados, relatórios, painéis, blocos
-6 - Uma coleção de visuais prontos, pré-organizados em painéis e relatórios é chamada de que maneira no Power BI?
-Um aplicativo
-
-PARA CONECTAR O POWER BI AO POSTGRE SQL ESCOLHER ODBC E NÃO POSTGRE
-String de Conexão
-Driver={PostgreSQL ANSI(x64)}; Server= IP ; Port= Porta; Database= Nome do banco de dados
-Driver={PostgreSQL ANSI(x64)}; Server= 127.0.0.1 ; Port= 5432; Database= ecommerce
-
-#---CRIANDO CONEXÃO COM BD Postgres:
-engine = pg.connect("dbname='ecommerce' user='postgres' host='127.0.0.1' port='5432' password='root'")
