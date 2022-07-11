@@ -768,3 +768,18 @@ BACKUP DATABASE db_Biblioteca
 TO DISK = 'C:\BKP DESKTOP\MAPA DE CAIXA\csv - mapadecaixa\db_Biblioteca.bak'
 
 db-engines.com
+
+SQL INNOVARO
+select 
+e.codigo || ' - ' || e.nome || ' - ' || e.cgccpf || ' - ' || e.chave as entidade,
+r.nome,
+p.UNITARIO, 
+p.QUANTIDADE,
+p.TOTAL,
+p.APROVACAO
+from PEDIDO p
+join entidade e
+on p.estabeleciped = e.chave
+join recurso r
+on p.recurso = r.chave
+LIMIT 10;
