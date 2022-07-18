@@ -769,17 +769,26 @@ TO DISK = 'C:\BKP DESKTOP\MAPA DE CAIXA\csv - mapadecaixa\db_Biblioteca.bak'
 
 db-engines.com
 
-SQL INNOVARO
-select 
-e.codigo || ' - ' || e.nome || ' - ' || e.cgccpf || ' - ' || e.chave as entidade,
-r.nome,
-p.UNITARIO, 
-p.QUANTIDADE,
+-- SQL INNOVARO
+SELECT 
+e.CODIGO || ' - ' || e.NOME || ' - ' || e.CGCCPF as FILIAL,
+e.CODIGO || ' - ' || e.NOME || ' ( ' || e.CGCCPF || ' ) ' as VENDEDOR,
+e.ENDERECO || ' - ' || e.BAIRRO as ENDERECO,
+e.CIDADE,
+t.CODIGO as UF,
+e.CEP,
+p.CHAVE as PEDIDO,
+r.NOME as PRODUTO,
+p.TOTALLIQUIDO as PRECO,
+p.QUANTIDADE as QTD,
 p.TOTAL,
-p.APROVACAO
+P.EMISSAOPED as DATAPED,
+P.EMISSAOPEDH as HORA
 from PEDIDO p
-join entidade e
-on p.estabeleciped = e.chave
-join recurso r
-on p.recurso = r.chave
-LIMIT 10;
+join ENTIDADE e
+on p.estabeleciped = e.CHAVE
+join TABELA t
+on p.UFPESSOAOP = t.CHAVE
+join RECURSO r
+on p.RECURSO = r.CHAVE
+LIMIT 300;
