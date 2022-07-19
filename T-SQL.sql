@@ -778,6 +778,7 @@ t.CODIGO AS UF,
 e.CEP,
 p.CHAVE AS PEDIDO,
 p.CFO,
+p.NUMERO AS NºNOTA,
 ent.CODIGO || ' - ' || ent.NOME || ' (' || ent.CGCCPF || ') ' AS CLIENTE,
 en.CODIGO || ' - ' || en.NOME || ' (' || en.CGCCPF || ') ' AS VENDEDOR,
 r.NOME AS PRODUTO,
@@ -805,5 +806,5 @@ ON p.RECURSO = r.CHAVE
 -- WHERE e.CODIGO = '102' --Código da Filial
 -- WHERE en.CODIGO = '3451414' --Código do Vendedor
 -- WHERE p.CHAVE = 835303426 --Chave do Pedido
-LIMIT 10
+LIMIT 20
 
