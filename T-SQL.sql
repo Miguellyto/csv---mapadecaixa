@@ -809,8 +809,860 @@ ON p.RECURSO = r.CHAVE
 LIMIT 20
 
 --USANDO O DISTINCT
+--TRAZER TODAS AS FILIAIS
+SELECT DISTINCT
+e.CODIGO || ' - ' || e.NOME || ' - ' || e.CGCCPF AS FILIAL,
+p.ESTABELECIPED
+FROM PEDIDO p
+JOIN ENTIDADE e
+ON p.ESTABELECIPED = e.CHAVE
+-- LIMIT 20;
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+ --Verificando o tamanho da bases de dados no pg
+SELECT pg_database.datname, pg_size_pretty(pg_database_size(pg_database.datname)) AS size FROM pg_database;
+
+--Listar os Bancos de Dados
+SELECT datname FROM pg_database;
+
+--Exibindo tabelas do Banco de Dados
+SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';
+
+--Selecionando Exibe os campos da tabela
+ /* Select * from ILOG where 1 = 2; */
+
+--Selecionar apenas o primeiro registro da tabela
+/*  Select * from ILOG LIMIT 2; */
+
+/* Select * from integracao LIMIT 2; */
+
+
+--Visualizando as colunas de uma tabela
+/* SELECT column_name FROM information_schema.columns WHERE table_name = 'recurso'; */
+
+--Ver detalhes das colunas de uma tabela
+/* SELECT * FROM information_schema.columns WHERE table_name ='recurso'; */
+
+ /* Select * from PEDIDO where LIKE 'FOGAO 4B. ESMALTEC BALI CRISTAL BR' */
+
+--Procurando campo no banco
+SELECT * FROM iGroupUser;
+SELECT IFULLNAME FROM iGroupUser WHERE '%UEL%';
+-- SELECT ENTIDADE FROM iGroupUser WHERE LIKE '%AGO%';
+-- WHERE ENTIDADE LIKE '%ESMALTEC%';
+
+--Procurando campo no banco
+SELECT ZNUMPLAQUETA FROM PEDIDO LIMIT 10;
+
+SELECT ZNUMPLAQUETA FROM PEDIDO WHERE chcriacao = 5956671;
+SELECT * FROM BAI_ WHERE BAI_XCHPEDBAIXA = 947507191;
+SELECT EMISSAO FROM PEDIDO WHERE CHPEDBAIXA = 977752883; 
+SELECT PEDBAIXADO FROM PEDIDO WHERE chcriacao =  977752883; 
+-----------------------------------------------------------
+SELECT * FROM PEDIDO WHERE chcriacao =  977752883; --ok
+SELECT * FROM PEDIDO WHERE LOGRADOUROPESSOAOP =  'teolandia'; --ok
+SELECT * FROM PEDIDO WHERE chave =  977752884;
+SELECT * FROM PEDIDO WHERE CHPEDBAIXA = 977752883;
+SELECT * FROM PEDIDO WHERE PEDBAIXADO = 977752883;
+SELECT * FROM PEDIDO WHERE EMISSAO = 977752883;
+SELECT * FROM PEDIDO WHERE EMISSAO = '23/01/2019';
+----------------------------------------------------------
+select
+indpres,
+ordemcnf
+from pedido;
+
+ALTER TABLE pedido ALTER COLUMN indpres TYPE bigint, ALTER COLUMN ordemcnf TYPE bigint;
+
+---TABELA RECURSO
+select * from ENTIDADE
+WHERE CODIGO = '50'
+LIMIT 10;
+--CIDADE
+select NOME, CHAVE from RECURSO
+LIMIT 10;
+select NOME,codigo from RECURSO
+LIMIT 10;
+select * from PEDIDO
+-- WHERE chave = 835303426
+LIMIT 10;
+--TABELA RECURSO
+------------TABELA---------
+select codigo || ' - ' || nome || ' - ' || cgccpf || ' - ' || chave
+from entidade
+where chave = 341697
+LIMIT 10;
+-- select chave, codigo, classe, nome, cgccpf, endereco, bairro, uf, cidade, CEP
+select DISTINCT codigo, nome, cgccpf, endereco, bairro, uf, cidade, CEP AS FILIAL
+from entidade
+where CODIGO = '50'
+LIMIT 10;
+--e.ENDERECO || ' - ' || e.BAIRRO || ' - ' || e.CIDADE || ' - ' || e.UF  || ' - ' || e.CEP as ENDERECO,
+--INSCRESTAD, LOGRADOURO, NUMERO,
 SELECT DISTINCT
 e.CODIGO || ' - ' || e.NOME || ' - ' || e.CGCCPF AS FILIAL,
 e.ENDERECO || ' - ' || e.BAIRRO AS ENDERECO
 FROM ENTIDADE AS e
 LIMIT 20;
+
+--TRAZER TODAS AS FILIAIS
+SELECT DISTINCT
+e.CODIGO || ' - ' || e.NOME || ' - ' || e.CGCCPF AS FILIAL,
+p.ESTABELECIPED
+FROM PEDIDO p
+JOIN ENTIDADE e
+ON p.ESTABELECIPED = e.CHAVE
+-- LIMIT 20;
+
+SELECT 
+e.CODIGO || ' - ' || e.NOME || ' - ' || e.CGCCPF AS FILIAL,
+e.ENDERECO || ' - ' || e.BAIRRO AS ENDERECO,
+e.CIDADE,
+t.CODIGO AS UF,
+e.CEP,
+p.CHAVE AS PEDIDO,
+-- p.CFO,
+p.NUMERO AS NºNOTA,
+ent.CODIGO || ' - ' || ent.NOME || ' (' || ent.CGCCPF || ') ' AS CLIENTE,
+en.CODIGO || ' - ' || en.NOME || ' (' || en.CGCCPF || ') ' AS VENDEDOR,
+r.NOME AS PRODUTO,
+p.TOTALLIQUIDO AS PRECO,
+p.QUANTIDADE AS QTD,
+p.TOTAL,
+P.EMISSAOPED AS DATAPED,
+P.EMISSAOPEDH AS HORAPED
+FROM PEDIDO p
+JOIN ENTIDADE e
+ON p.ESTABELECIPED = e.CHAVE
+JOIN ENTIDADE en
+ON p.REPRESENTA = en.CHAVE
+JOIN ENTIDADE ent
+ON p.PESSOA = ent.CHAVE
+JOIN TABELA t
+ON p.UFPESSOAOP = t.CHAVE
+JOIN RECURSO r
+ON p.RECURSO = r.CHAVE
+-- WHERE EMISSAOPED = '11/07/2019 00:00:00'
+---- WHERE EMISSAOPED BETWEEN '11/07/2019 00:00:00' AND '12/07/2019 00:00:00'
+---- OR EMISSAOPED BETWEEN '12/07/2019 00:00:00' AND '13/07/2019 00:00:00'
+---- AND PRECO < 50.00
+---- ORDER BY PRODUTO DESC
+WHERE e.CODIGO = '102' --Código da Filial
+-- WHERE en.CODIGO = '3451414' --Código do Vendedor
+-- WHERE p.CHAVE = 835303426 --Chave do Pedido
+-- LIMIT 10
+
+
+
+
+UNION 
+-- UNION ALL
+
+SELECT
+-- CODIGO, NOME, CGCCPF as VENDEDOR
+e.CODIGO || ' - ' || e.NOME || ' (' || e.CGCCPF || ')' as VENDEDOR
+from ENTIDADE e
+where CLASSE = -1897050521
+LIMIT 20
+
+
+
+SELECT 
+e.CODIGO || ' - ' || e.NOME || ' ( ' || e.CGCCPF || ' ) ' as VENDEDOR
+from PEDIDO p 
+join ENTIDADE e
+on p.REPRESENTA = e.CHAVE
+LIMIT 20;
+-- p.REPRESENTA,
+-- where e.CLASSE = -1897050521
+
+-- Select CODIGO, CHAVE, NOME, CGCCPF, CLASSE from ENTIDADE
+-- where CLASSE = -1895829717
+
+Select * from tabela where chave = -1897135768
+Select * from tabela where chave =  382838
+Select * from tabela where chave = -1899999713;
+Select * from ENTIDADE where chave = 206071719
+select CODIGO from TABELA;
+
+-- SELECT LOCALIDADEPESSOAOP from PEDIDO
+SELECT * FROM ENTIDADE
+where NOME = ''
+-- where chave = 211664430
+-- where chave = 341697
+LIMIT 10
+
+SELECT CHAVE, NOME FROM CLASSE
+-- LIMIT 10
+WHERE CHAVE = -1897050521
+
+SELECT ESCFUNCAO1, ESCENTIDADE1 FROM PEDIDO
+LIMIT 10
+
+select chave, codigo, nome, cgccpf
+from entidade
+-- where chave = 211664430
+where chave = 341697
+
+-- CAIXA
+-- UF
+
+select * FROM PEDIDO
+LIMIT 10;
+select CEPPESSOAOP, 
+LOCALIDADEPESSOAOP, 
+UFPESSOAOP,  
+uflocescrituop 
+FROM PEDIDO
+LIMIT 10;
+--CAIXA
+select 
+p.DISPONIVEL
+from PEDIDO p
+join ENTIDADE e
+on p.DISPONIVEL = e.CHAVE
+LIMIT 10;
+select * FROM ENTIDADE
+LIMIT 10;
+select CAIXAPED, DISPONIVEL FROM PEDIDO
+LIMIT 10;
+
+estabelecipedido.uf.codigo
+Select 
+CHAVE,
+CHCRIACAO, 
+RECURSO, 
+ESTABELECI, 
+EMISSAO,
+estabeleciped, 
+TOTAL
+from PEDIDO 
+LIMIT 10;
+--where CHCRIACAO
+-------------------
+-- p.estabeleciped, --as FILIAL,
+-- p.REPRESENTA, --as VENDEDOR,
+
+-- p.APROVACAO,
+-- p.CAIXAPED,
+-- p.UFPESSOAOP as UF,
+--ITEMLIQUIDO
+--ITEM contem o preço
+--UNITARIO
+--NEGOCIADOITEM
+--TOTALNEGOCIADO
+--TOTALCOMERCIAL
+--TOTALBRUTO
+--TOTALLIQUIDO
+--DESCITEM
+--CONFINS
+--PIS
+--CUSTOCONT
+--CUSTOMAT
+--EMISSAOPED
+--EMISSAOPEDH
+--CAIXAPED
+
+WHERE NOME LIKE '%ESMALTEC%'
+LIMIT 10;
+
+select 
+CHAVE, 
+CODIGO, 
+CLASSE, 
+NOME, 
+EAN, 
+FABRICANTE, 
+IMAGEM, 
+MARCA, 
+PRAZOGARANTIA, 
+DESCRICAOGENERICA 
+from RECURSO WHERE NOME LIKE '%ESMALTEC%';
+
+/* ihour, idate --from PEDIDO LIMIT 2;*/
+
+SELECT 
+chave, 
+ean,
+nome, 
+codigo,
+classe,   
+fabricante, 
+imagem, 
+marca, 
+prazogarantia,
+descricaogenerica, 
+yecommerceskuid, 
+yecommerceid,
+yecommerceprodutopaiid,
+yecommercenome,
+yecommercedescricao,
+yecommercecategoria,
+yecommerceapelido
+from RECURSO WHERE NOME LIKE '%ESMALTEC%';
+
+---Tabela VINCULA onde costa o "SALDO DO RECURSO"=Quantidade "ESTOQUE"
+select
+CHAVE,
+RECURSO,
+QUANTIDADE,
+VALOR,
+LOCESCRITU
+from VINCULA WHERE NOME LIKE '%ESMALTEC%';
+
+NMINPARCELAS
+
+---Tabela FATOR, onde consta o FATOR=Preços dos RECURSOS=Produtos
+SELECT * FROM FATOR LIMIT 10;
+SELECT fator FROM FATOR;
+
+/* SELECT
+icreatedat,
+iupdatedat
+FROM CLASSE
+LIMIT 10; */
+
+SELECT
+icreatedat,
+iupdatedat,
+icreation,
+icreationhour,
+ilastmodified,
+ilastmodifiedhour
+FROM iVfs
+LIMIT 10;
+SELECT * FROM iVfs LIMIT 10;
+SELECT table_name 
+FROM information_schema.tables 
+WHERE table_schema = 'public';
+
+---FATOR, CLASSE, Fatoresvenda
+Select * from tabela where chave = -1898145931;
+---1897048799, -1894333884, -1897148410
+
+---Query imagem 
+Select iKey, iVersion, iFieldNames, iBeforeValues
+From iLog
+Where iType = -1898145931 /* Registro Removido */;
+
+--- Código de Rastreamento.ip (-1894804815) --- faturamento,frete e status
+Select distinct p.PESSOA, p.NUMERO, p.EMISSAO, p.CHCRIACAO, p.YIDPEDIDO, e.CODIGO as CODIGORASTREIO, e.CHAVE as CHAVE_EVENTO
+        From PEDIDO p
+        join INTEGRACAO i on i.YIDPEDIDO = p.YIDPEDIDO
+        left outer join EVENTO e on e.CRPEDIDO = p.CHCRIACAO and e.CLASSE = -1894804814 /* Código de Rastreamento */
+        Where i.YAVISOFATURAMENTO is not null
+            and p.OPERACAOCANCELADA is null
+            and p.CHPEDBAIXA is not null
+            and p.APROVACAO is not null
+            and p.STATUSNFE = -1894641856 /* Enviada com Sucesso */
+        " + whereExpress + "
+
+
+--RASTREAMENTO DO PEDIDO:
+SELECT 
+PESSOA,
+CHCRIACAO,
+NUMERO, --DA NFE
+EMISSAO,
+CODIGORASTREIO,
+XENDERECO,
+FRETE --valor do frete
+FROM PEDIDO;
+
+{
+"status":"shipping_informed",
+"shipments":
+ [{"id":"606b87e9e7cb7f1d4d5f8d33",  //select CHCRIACAO from PEDIDO
+"shipping_company":"Correios",//SELECT TRANSPORTA FROM PEDIDO
+"shipping_method":"PAC", //select TIPOFRETE from PEDIDO
+"track_code":"11111", //select CODIGORASTREIO/RASTREIO from PEDIDO
+"track_url":"http://correios.com.br",
+"status":"shipped", //select STATUSNFE from PEDIDO //select YSTATUS from INTEGRACAO
+"date_shipped":"2021-02-01" //select DATAEMBARQUE/REEMBARQUE from PEDIDO
+}]
+}
+
+SELECT 
+CHCRIACAO,
+TRANSPORTA,
+TIPOFRETE,
+CODIGORASTREIO/RASTREIO,
+STATUSNFE
+FROM PEDIDO;
+select YSTATUS from INTEGRACAO
+select DATAEMBARQUE from PEDIDO
+
+
+--/Configuração/Fiscais/0100 Accounting.ic
+this.camposInalteraveisDaNfe.push(
+    "TIPO",
+    "EMISSAOMOV",
+    "NUMERO",
+    "NUMEROSEQ",
+    "SERIESUBS"//,
+    //TODO: Rever uso dos campos abaixo, pois os mesmos podem ser alterados em outras situacoes, tais como cancelamento.
+    //"CHACESSONFE",
+    //"ENVIONFE",
+    //"ENVIONFEH",
+    //"PROTOCOLONFE",
+    //"STATUSNFE",
+    //"TIPOCONTINGENCIANFE",
+    //"TIPOEMISSAONFE"
+);
+
+--- PrincipiaPedidoService.ijs (-1894804822) ---
+        select
+            YDATAINCLUSAO,
+            MAX(YHORAINCLUSAO) as HORAINCLUSAO
+        from
+            INTEGRACAO
+        where
+            CLASSE = " + ECommerceConstantesCC.classes.INTEGRACAO_PEDIDO + "
+            and YDATAINCLUSAO in (
+                select
+                    MAX(YDATAINCLUSAO) as DATAINCLUSAO
+                from
+                    INTEGRACAO
+                where
+                    CLASSE = " + ECommerceConstantesCC.classes.INTEGRACAO_PEDIDO + "
+            )
+        group by YDATAINCLUSAO;
+
+---ECommercePedidoServiceCC.ijs (-1894804981)---
+---ECommercePedidoServiceCC.prototype._pegarPedidosPendentesDeCriacao = function( ids ){
+
+    var query = "
+        select i.*
+        from INTEGRACAO i
+        where i.YLIBERACAOATENDIMENTO is not null
+            and i.YENCERRAMENTO is null
+            and not exists (
+                select 1
+                from PEDIDO p
+                where p.YIDPEDIDO=i.YIDPEDIDO
+                    and p.CHPEDBAIXA is null
+                    and p.CHDEVOLUC is null
+            ) " +
+            queryUtilities.clauseWhereOfKeys("and", "i.CLASSE", classes.getChildren( ECommerceConstantesCC.classes.INTEGRACAO_PEDIDO )) +
+            queryUtilities.clauseWhereOfKeys("and", "i.YIDPEDIDO", ids)
+
+---ECommercePedidoServiceCC.prototype._pegarPedidosPendentesDeNotificacaoFaturamento = function( ids ){
+    var integracao = database.query("
+        select i.*
+        from INTEGRACAO i
+        where i.YAVISOFATURAMENTO is null
+            and exists (
+                select 1
+                from PEDIDO p
+                where p.YIDPEDIDO=i.YIDPEDIDO
+                    and p.CHPEDBAIXA is null
+                    and p.CHDEVOLUC is null
+                    and exists (
+                        select 1
+                        from PEDIDO bx
+                        where bx.CHPEDBAIXA=p.CHAVE
+                            and bx.OPERACAOCANCELADA is null
+                            and bx.STATUSNFE = " + ECommerceConstantesCC.statusNfe.EMITIDA + "
+                    )
+            ) " +
+            queryUtilities.clauseWhereOfKeys("and", "i.CLASSE", classes.getChildren( ECommerceConstantesCC.classes.INTEGRACAO_PEDIDO )) +
+            queryUtilities.clauseWhereOfKeys("and", "i.YIDPEDIDO", ids)
+    );
+    integracao.logChanges = true;
+
+    return integracao;
+};
+
+---ECommercePedidoServiceCC.prototype._pegarPedidosPendentesDeNotificacaoCancelamento = function( ids ){
+    var integracao = database.query("
+        select i.yidpedido
+        from INTEGRACAO i
+        where i.YCANCELAMENTO is null
+            and exists (
+                select 1
+                from PEDIDO p
+                where p.YIDPEDIDO = i.YIDPEDIDO
+                    and ( p.cancelamensaldo is not null or
+                          exists (
+                                select 1
+                                from PEDIDO bx
+                                where bx.CHPEDBAIXA = p.CHAVE
+                                    and bx.OPERACAOCANCELADA is not null
+                                    and bx.STATUSNFE = " + ECommerceConstantesCC.statusNfe.CANCELADA + "
+                                ))
+                )" +
+            queryUtilities.clauseWhereOfKeys("and", "i.CLASSE", classes.getChildren( ECommerceConstantesCC.classes.INTEGRACAO_PEDIDO )) +
+            queryUtilities.clauseWhereOfKeys("and", "i.YIDPEDIDO", ids)
+    );
+    integracao.logChanges = true;
+
+    return integracao;
+};
+---ECommercePedidoServiceCC.prototype._pegarEventosDeCodigoRastreamentoPendentes = function(){
+    var eventos = database.query("
+        select e.*
+        from EVENTO e
+        where e.CLASSE = -1894804814 /* Código de Rastreamento */
+            and DATA is null
+    ");
+    eventos.logChanges = true;
+
+    return eventos;
+};
+
+---ECommercePedidoServiceCC.prototype._pegarNotaFiscais = function( idsPedidos ){
+    if( !idsPedidos ){
+        throw new Error("Informe os IDs dos pedidos!");
+    }
+
+    if( typeof idsPedidos == "string" ){
+        idsPedidos = this.converter.preparaChaveParaConsultaDadosIntegracao( idsPedidos.toString().split(",") );
+    }
+
+    var notasFiscais = database.query("
+        select distinct bx.CHAVE, bx.NUMERO, bx.CHACESSONFE, bx.EMISSAO, bx.EMISSAOH, bx.SERIESUBS, bx.RECURSO, bx.UNITARIO, bx.QUANTIDADE, bx.TOTAL, p.YIDPEDIDO
+        from PEDIDO bx
+            left outer join PEDIDO p on p.CHAVE=bx.CHPEDBAIXA
+        where bx.CHPEDBAIXA is not null
+            and bx.OPERACAOCANCELADA is null
+            and bx.STATUSNFE = -1894641856 /* Enviada com Sucesso */
+            and p.YIDPEDIDO in ( " + idsPedidos.join(', ') + ")"
+    );
+
+    return {
+        cabecalhos: notasFiscais.sum("NUMERO;EMISSAO;EMISSAOH;SERIESUBS;YIDPEDIDO;CHACESSONFE", "TOTAL;QUANTIDADE"),
+        itens: notasFiscais
+    }
+};
+
+---/products/Web Commerce/library/objects/ecommerce/pesquisas/ECommerceConsultaPedidosCC.ijs
+ECommerceConsultaPedidosCC.prototype._consultarNotificacoes = function( ids ){
+    var notificacoes = database.query("
+        select YIDPEDIDO as ID, DATA, HORA, USUARIO, SITUACAO
+        from EVENTO " +
+        queryUtilities.clauseWhereOfKeys("where", "CLASSE", classes.getChildren( ECommerceConstantesCC.classes.EVENTOS_ATENDIMENTO )) +
+            queryUtilities.clauseWhereOfKeys("and", "YIDPEDIDO", ids )
+    );
+
+    this.notificacoes.append( notificacoes );
+
+
+--/products/Web Commerce/library/objects/ecommerce/base/ECommercePedidoConverterCC.ijs
+var endereco = dadosPessoa.endereco.split(" ");
+        var tipologradouro = endereco[0];
+        var tabelaTipoLogradouro = database.query("
+        	select CHAVE
+            from TABELA
+            where
+                CLASSE = -1897131373 and
+                (CODIGO ilike '%" + tipologradouro + "%' or
+                NOME ilike '%" + tipologradouro + "%')
+         ");
+--TABELA INTEGRACAO--
+/* select
+CHAVE,
+VERSAOPEDIDO,
+DATAGRAVACAOPEDIDO, --Retorna a data de criação do PEDIDO 
+HORAGRAVACAOPEDIDO,
+DADOSPEDIDO,
+YAVISOFATURAMENTO,
+YAVISOFATURAMENTOH,
+YAVISOFATURAMENTOUSUARIO,
+YDADOSPAGAMENTO,
+YSITUACAOPAGAMENTO,
+YDADOSPEDIDO,
+YSTATUS,
+YIDPEDIDO,
+YEMAIL
+from integracao LIMIT 2; */
+
+--Regras de Pagamentos--
+SELECT 
+CODIGO,
+NOME,
+TIPO,
+CHBANDEIRA,
+REDEAUTORIZADORA,
+CONDNEGOCIACAO,
+YABSORVEPARCELAECOMMERCE,
+YCONSIDERAFRETETITULO,
+YCRIAPEDIDOCOMTITULOPENDENTE
+FROM tabela where 1 = 2
+select TOTAL from PEDIDO --Total do Pedido
+
+---Tipos de pagamento
+"payments" : [
+ {
+ "payment_total" : 24.56, // select TOTAL from PEDIDO 
+ "payment_installments" : 1, //PARCELAMENTO
+ "payment_method" : "credit_card", // select NOME from TABELA
+ "payment_type" : "credit", // select TIPO from TABELA
+ "_id" : ObjectId("5dacf4eef13005ee3cdc02d4") // select CODIGO from TABELA
+ },
+ ]
+
+payment_type: { type: String, enum: [
+‘credit’, // credito
+‘debit’, // debito
+‘ticket’, // boleto
+‘voucher’, // conta
+‘transfer’ // transferencia
+]},
+
+---
+SELECT 
+CHAVE,
+CODIGO,
+COMISSAOP,
+QUANTIDADE,
+QUANTIDADE01,
+RECURSO,
+DEPOSITO,
+FABRICANTE,
+TEMZONACIDADE,
+UF,
+VALOR,
+CONTA,
+LOCALIDADE,
+ALTURA,
+PESO,
+DIASENTREGA,
+TOLEDMAIS,
+TOLEDMENOS,
+GARANTIA,
+MARCA,
+COR,
+FATOR,
+CLIENTE,
+PESSOA,
+NOME,
+USUARIO,
+EMAIL,
+CADASTRADOR,
+STATUS,
+SITUACAO,
+TIPOPESSOA,
+LARGURA,
+COMPRIMENTO
+FROM tabela where 1 = 2;
+
+select
+indpres,
+ordemcnf
+from pedido;
+
+ALTER TABLE pedido ALTER COLUMN indpres TYPE bigint, ALTER COLUMN ordemcnf TYPE bigint;
+
+ Select * from PEDIDO LIMIT 2;
+ Select * from PARCELA LIMIT 10;
+ Select * from ENTIDADE LIMIT 10;
+ Select * from EVENTO where 1 = 2;
+ Select * from PEDIDO where 1 = 2;
+ Select * from FATOR where 1 = 2;
+ Select * from MOVDEPOS where 1 = 2;
+ Select * from TABELA where 1 = 2;
+ Select * from iVfs where 1 = 2;
+  Select * from INTEGRACAO LIMIT 2;
+  Select * from iVfs LIMIT 2;
+  Select * from iLog LIMIT 2;
+
+Select distinct p.PESSOA, p.NUMERO, p.EMISSAO, p.CHCRIACAO, p.YIDPEDIDO, e.CODIGO as CODIGORASTREIO, e.CHAVE as CHAVE_EVENTO
+        From PEDIDO p;
+        
+select
+CHAVE,
+RECURSO,
+QUANTIDADE,
+CUSTO --Preço
+from MOVDEPOS
+LIMIT 10;
+
+--TABELA PEDIDO
+select
+CHAVE,
+CHCRIACAO,
+RECURSO,
+ITEM,
+USUARIOPED,
+USUARIO,
+COMPRADOR,
+DISPONIVELPED,
+UNITARIO,
+DESCITEMKIT,
+ACRESITEMKIT,
+COMISSVALOR1,
+COMISSVALORPED1,
+COMISSVALORTIT1,
+COMISSFATOR1,
+QUANTIDADE,
+EMISSAOPED,
+EMISSAOPEDH,
+HORASISTEMAEMISSOR,
+DATASISTEMAEMISSOR
+HORACANCSISTEMAEMISSOR,
+EMISSAODOCH,
+EMISSAODOC,
+EMISSAOUTC,
+EMISSAOHUTC,
+DATAEMBARQUE,
+DATAEMBARQUEH,
+DATAENTREGA,
+RASTREIO,
+RASTREIOCOMP,
+TIPOFRETE,
+FRETE, --valor do frete
+TRANSPORTA,
+DESCITEM,
+DESCONTO,
+ORIGEM,
+SAIDAORIGEM,
+DESTINO,
+CHEGADADESTINO,
+ENTREGA,
+VOLQDETRANSP,
+NUMEROPEDIDOCOMPRA,
+PEDLOCESCTRANSF,
+ITEMPEDIDOCOMPRA,
+PRAZOGARANTIAM
+YIDPEDIDO,
+MOEDA,
+NUMEROSERIE,
+SERIESUBS,
+
+STATUSCORRENTE, --status da NFE
+CRPEDIDO, --CHAVE DE CRIAÇÃO PEDIDO
+NUMERO, --DA NFE
+SERIE, -- DA NFE
+CFOP, -- DA NFE
+PESSOA, --CLIENTE DO PEDIDO
+PESSOAUF, --UF DO CLIENTE DA NFE
+EMISSAO, --DATA DE EMISSÃO DA NFE
+TIPO,
+DATA_HORAPROTOCOLO, -- DA NFE
+PEDIDO, --TOTAL DO PEDIDO
+CHACESSONFE_PEDIDO --CHAVE DE ACESSO NFE
+
+LOCENTREGA,
+TOTAL,
+SUBTOTAL,
+TOTALDANOTA,
+TOTALLIQUIDO,
+TOTALBRUTO
+from PEDIDO LIMIT 2;
+
+SELECT UFPESSOA FROM PEDIDO
+LIMIT 10;
+
+--TABELA PESSOA--
+SELECT EMAIL FROM PESSOA --CLASSE;
+
+---PESSOA PEDIDO -- PESSOAOP,
+SELECT
+PESSOA, --CLIENTE DO PEDIDO
+LOGRADOUROPESSOAOP,
+NUMEROPESSOAOP,
+COMPLEMENTOPESSOAOP,
+PONTOREFERPESSOAOP,
+LOCALIDADEPESSOAOP,
+CEPPESSOAOP,
+UFPESSOAOP,
+PAISPESSOAOP,
+TIPOLOGRADOUROPESSOAOP,
+SUBLOCALIDADEPESSOAOP,
+ZONACIDADEPESSOAOP
+EMAILPESSOA,
+FROM pedido;
+
+---ESCRITUOP PEDIDO
+select
+NUMEROLOCESCRITUOP,
+LOGRADOUROLOCESCRITUOP,
+COMPLEMENTOLOCESCRITUOP,
+PONTOREFERLOCESCRITUOP,
+LOCALIDADELOCESCRITUOP,
+UFLOCESCRITUOP,
+CEPLOCESCRITUOP 
+from PEDIDO
+LIMIT 10;
+
+---ENTIDADE
+SELECT
+ENTNOME,
+ENTENDERECO,
+ENTFONE,
+ENTPONTOREFER,
+ENTBAIRRO,
+ENTUF,
+ENTCEP,
+ENTCIDADE
+ENTLOCALIDADE,
+ENTLOGRADOURO,
+ENTCOMPLEMENTO,
+ENTNUMERO,
+ENTPAIS,
+ENTTIPOLOGRADOURO,
+ENTSUBLOCALIDADE
+FROM pedido;
+
+---Produto OK---
+select 
+    a.chave, 
+    a.ean,
+    '' as ncm,
+    a.nome, 
+    a.codigo,
+    'quantidade' as quantidade,
+    'preço especial' as preço_especial,
+    b.fator as preço,
+    a.descricaogenerica,
+    a.marca, 
+    'custo' as custo,
+    a.prazogarantia,
+    'observacao' as observacao,
+    'link produto' as link_produto,
+    'acessivel' as acessivel,
+    a.classe,   
+    'tempo manuseio' as tempo_manuseio,
+    'tempo fabricacao' as tempo_fabricacao,
+    a.comprimento as comprimento,
+    a.largura as largura,
+    a.altura as altura,
+    a.pesbruunid as peso,
+    'atributos' as atributos,
+    'fotos' as fotos,
+    'tabelas de preco' as tabela_preco,
+    'deposito' as deposito,
+    'variacoes' as variacoes
+    from RECURSO a 
+    join fator b
+    on a.chave = b.recursoorig
+    and b.tabfator = 462894
+    and b.fim is null
+where codigo = '1056'
+
+LISTA MAT. FUNC. LE005
+
+   SELECT A.numcad AS MATRICULA, A.nomfun AS NOME, A.numpis AS PIS
+     FROM R034FUN A
+    WHERE A.sitafa <> 7 AND A.codfil = 5 AND A.numcad >= 1000
+ ORDER BY 1
+
+ -------------
+
+ Select Distinct t.CHAVE, t.CHCRIACAO, t.EMISSAO, t.NUMERO as TITULONUMERO,
+                 t.VENCIMENTO, t.VENCIMENTOORIGINAL, t.CORRECAO, t.PRINCIPAL, t.VALOR, t.TIPO as TIPOTITULO, t.ALINEA,
+                 t.PESSOA, t.CARTEIRA, t.JURO, t.MULTA, t.ACRESCIMO, t.DESCONTO, t.CHEQUE, t.NOSSONUMERO,
+                 t.BANCO, t.AGENCIA, t.SACADONOME,
+                 t.CHBAIXA,
+                 t.BAIXA,
+                 t.BAIXAPARCIAL,
+                 t.NEGOCIACAO,
+                 p.LOCESCRITU,
+                 p.TIPO,
+                 p.NUMERO,
+                 p.REPRESENTA,
+                 t.ESTABELECI,
+                 (select count(t2.CHAVE) as COUNT From TITULO t2 Where t2.NEGOCIACAO = t.CHCRIACAO) as QT_NEGOCIADO
+        From   TITULO t join PEDIDO p on ( p.CHCRIACAO = t.CHCRIACAO ) + strJoin + 
+        Where t.CHAVE is not null + where.join
