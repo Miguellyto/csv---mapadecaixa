@@ -1666,3 +1666,38 @@ LISTA MAT. FUNC. LE005
                  (select count(t2.CHAVE) as COUNT From TITULO t2 Where t2.NEGOCIACAO = t.CHCRIACAO) as QT_NEGOCIADO
         From   TITULO t join PEDIDO p on ( p.CHCRIACAO = t.CHCRIACAO ) + strJoin + 
         Where t.CHAVE is not null + where.join
+
+
+
+--CRIANDO O BANCO CONTROLLER
+
+CREATE DATABASE "Controller"
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Portuguese_Brazil.1252'
+    LC_CTYPE = 'Portuguese_Brazil.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+
+--CRIANDO A TABELA filial
+
+CREATE TABLE IF NOT EXISTS public.filial
+(
+    cod integer NOT NULL DEFAULT nextval('filial_cod_seq'::regclass),
+    nome character varying(150) COLLATE pg_catalog."default" NOT NULL,
+    endereco character varying(150) COLLATE pg_catalog."default" NOT NULL,
+    bairro character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    cep numeric(9,0) NOT NULL,
+    cidade character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    uf character varying(2) COLLATE pg_catalog."default" NOT NULL,
+    fonecell numeric(15,0) NOT NULL,
+    fonegerancia numeric(15,0) NOT NULL,
+    statusfilial character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT filial_pkey PRIMARY KEY (cod)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.filial
+    OWNER to postgres;
