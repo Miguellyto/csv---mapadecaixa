@@ -769,7 +769,7 @@ TO DISK = 'C:\BKP DESKTOP\MAPA DE CAIXA\csv - mapadecaixa\db_Biblioteca.bak'
 
 db-engines.com
 
---QUERY PARA POWERBI
+--QUERY PARA POWERBI - INNOVARO
 SELECT 
 e.CODIGO || ' - ' || e.NOME || ' - ' || e.CGCCPF AS FILIAL,
 e.ENDERECO || ' - ' || e.BAIRRO AS ENDERECO,

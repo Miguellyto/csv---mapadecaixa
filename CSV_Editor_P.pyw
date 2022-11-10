@@ -26,6 +26,7 @@ def UploadAction():
             mapadecaixa.loc[index, 'DEBITO'] = '10265'
         elif row['3o. Agrupamento'] == 'Crédito Bancário':
             mapadecaixa.loc[index, 'DEBITO'] = '10265'
+
         elif row['3o. Agrupamento'] == 'Cheque à vista':
             mapadecaixa.loc[index, 'DEBITO'] = '10267'
 
@@ -64,15 +65,12 @@ def UploadAction():
 
     filial = en.get()
     mapadecaixa['FILIAL'] = filial
-    
+
     for index, row in mapadecaixa.iterrows():
         if row['HIST.p1'].startswith('CRÉDITO BANCÁRIO'):
             mapadecaixa.loc[index, 'DEBITO'] = '10265'
-        if row['HIST.p1'].startswith('DUPLICATA'):
-            mapadecaixa.loc[index, 'DEBITO'] = '10265'
-
-    # mapadecaixa['VALOR'] = mapadecaixa['VALOR'].astype(str)
-    mapadecaixa['VALOR'] = mapadecaixa['VALOR'].astype('string')
+            
+    mapadecaixa['VALOR'] = mapadecaixa['VALOR'].astype(str)
 
     mapadecaixa.to_csv('Filial_'+filial+' - MapaCaixa.csv', sep=';', encoding='latin-1', header=False, index=False) 
     # mapadecaixa.to_csv('Filial_'+filial+' - MapaCaixa.csv', encoding='latin-1', header=False, index=False) 

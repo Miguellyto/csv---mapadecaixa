@@ -1,6 +1,13 @@
- Os arquivos: CSV_Editor.py e CSV_Editor.pyw
- contem o código final do CSV_Editor e o CSV_Editor.ipynb
- é utilizado para testar os código dos files acima.
+ - Os arquivos: CSV_Editor_H.py e CSV_Editor_P.pyw
+ contem o código final do CSV_Editor. P/ execulta-los digite "python CSV_Editor_H.py" ou "python CSV_Editor_P.pyw" no TERMINAL.
+ - O arquivos: CSV_Editor_D.ipynb
+ é utilizado para testar os código dos files acima e ADD novas funcionabilidades.
+  Iniciar o jupyter digite no terminl: "jupyter notebook"
+
+Criando EXE com Icon:
+# pyinstaller CSV_Editor.pyw -i csv-icon.ico --onefile
+# pyinstaller --noconsole exec_main.py 
+------------------------------------------
 
  Iniciar o jupyter: jupyter notebook 
  
@@ -180,6 +187,8 @@ Cart Mastercard Pagseguro = 10221
 Cart Hiper Crédito Pagseguro = 10221
 Cart Stone Hipercard = 10221
 Cart Maestro Pagseguro = 10221
+#ADD
+Cart Pix BB = 10072532
 ----------------------------------
 -Uma dúvida o "4o. Agrupamento" você utiliza?
 --é extamente no grupo 4 que vem as contas
@@ -236,3 +245,26 @@ button
         description = 'Title:',  
     )  
     title_textbox  
+
+    -----------ERRO---------------
+    ModuleNotFoundError: No module named 'pandas'
+
+    Eu consertei o mesmo problema com os comandos abaixo ...
+
+Digite pythonno seu terminal. Se você vir python versão 2.x , execute estes dois comandos para instalar o Pandas:
+
+sudo python -m pip install wheel
+
+e
+
+ sudo python -m pip install pandas
+
+Caso contrário, se você vir python version 3.x , execute estes dois comandos para instalar o Pandas:
+
+sudo python3 -m pip install wheel
+
+e
+
+ sudo python3 -m pip install pandas
+
+ https://stackoverflow.com/questions/33481974/importerror-no-module-named-pandas
