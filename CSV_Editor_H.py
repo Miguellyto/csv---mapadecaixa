@@ -65,7 +65,8 @@ def UploadAction():
         if row['3o. Agrupamento'] == 'Duplicata':
             mapadecaixa.loc[index,'4o. Agrupamento'] =  str(mapadecaixa.loc[index,'3o. Agrupamento']) + ' - ' + str(mapadecaixa.loc[index,'Cliente'])
         elif row['3o. Agrupamento'] == 'Crédito Bancário':
-            mapadecaixa.loc[index,'4o. Agrupamento'] =  str(mapadecaixa.loc[index,'3o. Agrupamento']) + ' - ' + str(mapadecaixa.loc[index,'Cliente'])
+            mapadecaixa.loc[index,'4o. Agrupamento'] =  str(mapadecaixa.loc[index,'3o. Agrupamento']) + ' - ' + str(mapadecaixa.loc[index,'4o. Agrupamento']) + ' - ' + str(mapadecaixa.loc[index,'Cliente'])
+            # mapadecaixa.loc[index,'4o. Agrupamento'] =  str(mapadecaixa.loc[index,'3o. Agrupamento']) + ' - ' + str(mapadecaixa.loc[index,'Cliente'])
         elif row['3o. Agrupamento'] == 'Cheque à vista':
             mapadecaixa.loc[index,'4o. Agrupamento'] =  str(mapadecaixa.loc[index,'3o. Agrupamento']) + ' - ' + str(mapadecaixa.loc[index,'Cliente'])
 
