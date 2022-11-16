@@ -21,15 +21,19 @@ def UploadAction():
             mapadecaixa.loc[index, '4o. Agrupamento'] = 'Cart Maestro Pagseguro;10221'
 
     mapadecaixa[['4o. Agrupamento','DEBITO']] = mapadecaixa['4o. Agrupamento'].str.split(';', expand=True)
-    for index, row in mapadecaixa.iterrows():
-        if row['3o. Agrupamento'] == 'Duplicata':
-            mapadecaixa.loc[index, 'DEBITO'] = '10265'
-        elif row['3o. Agrupamento'] == 'Crédito Bancário':
-            mapadecaixa.loc[index, 'DEBITO'] = '10265'
 
-        elif row['3o. Agrupamento'] == 'Cheque à vista':
-            mapadecaixa.loc[index, 'DEBITO'] = '10267'
-
+#     for index, row in mapadecaixa.iterrows():
+#         if row['3o. Agrupamento'] == 'Duplicata':
+#             mapadecaixa.loc[index, 'DEBITO'] = '10265'
+#         elif row['3o. Agrupamento'] == 'Crédito Bancário':
+#             mapadecaixa.loc[index, 'DEBITO'] = '10265'    
+#         elif row['3o. Agrupamento'] == 'Cheque à vista':
+#             mapadecaixa.loc[index, 'DEBITO'] = '10267'
+# # New Add Pag PIX
+#     for index, row in mapadecaixa.iterrows():
+#         if row['4o. Agrupamento'] == 'Cart Pix Bb':
+#             mapadecaixa.loc[index, 'DEBITO'] = '10072532'
+# # --
     for index, row in mapadecaixa.iterrows():
         if row['4o. Agrupamento'] == 'Carteira Cobrança Simples':
             mapadecaixa.loc[index, 'DEBITO'] = '45534'
@@ -43,6 +47,19 @@ def UploadAction():
     for index, row in mapadecaixa.iterrows():
         if row['Descrição'].startswith('RC'):
             mapadecaixa.loc[index, 'CREDITO'] = '31472'
+# Conteúdo deslocado da linha 25-36
+    for index, row in mapadecaixa.iterrows():
+        if row['3o. Agrupamento'] == 'Duplicata':
+            mapadecaixa.loc[index, 'DEBITO'] = '10265'
+        elif row['3o. Agrupamento'] == 'Crédito Bancário':
+            mapadecaixa.loc[index, 'DEBITO'] = '10265'    
+        elif row['3o. Agrupamento'] == 'Cheque à vista':
+            mapadecaixa.loc[index, 'DEBITO'] = '10267'
+# New Add Pag PIX
+    for index, row in mapadecaixa.iterrows():
+        if row['4o. Agrupamento'] == 'Cart Pix Bb':
+            mapadecaixa.loc[index, 'DEBITO'] = '10072532'
+# --Fim-- Conteúdo deslocado da linha 25-36
 
     for index, row in mapadecaixa.iterrows():
         if row['3o. Agrupamento'] == 'Duplicata':
@@ -65,12 +82,17 @@ def UploadAction():
 
     filial = en.get()
     mapadecaixa['FILIAL'] = filial
-
-    for index, row in mapadecaixa.iterrows():
-        if row['HIST.p1'].startswith('CRÉDITO BANCÁRIO'):
-            mapadecaixa.loc[index, 'DEBITO'] = '10265'
-            
-    mapadecaixa['VALOR'] = mapadecaixa['VALOR'].astype(str)
+    
+    # (Excluir essas linhas)
+    # for index, row in mapadecaixa.iterrows():
+    #     if row['HIST.p1'].startswith('CRÉDITO BANCÁRIO'):
+    #         mapadecaixa.loc[index, 'DEBITO'] = '10265'
+    #     if row['HIST.p1'].startswith('DUPLICATA'):
+    #         mapadecaixa.loc[index, 'DEBITO'] = '10265'
+    # (--------------------)
+    
+    # mapadecaixa['VALOR'] = mapadecaixa['VALOR'].astype(str)
+    mapadecaixa['VALOR'] = mapadecaixa['VALOR'].astype('string')
 
     mapadecaixa.to_csv('Filial_'+filial+' - MapaCaixa.csv', sep=';', encoding='latin-1', header=False, index=False) 
     # mapadecaixa.to_csv('Filial_'+filial+' - MapaCaixa.csv', encoding='latin-1', header=False, index=False) 

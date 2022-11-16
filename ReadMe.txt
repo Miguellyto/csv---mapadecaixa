@@ -5,7 +5,7 @@
   Iniciar o jupyter digite no terminl: "jupyter notebook"
 
 Criando EXE com Icon:
-# pyinstaller CSV_Editor.pyw -i csv-icon.ico --onefile
+# pyinstaller CSV_Edito_P.pyw -i csv-icon.ico --onefile
 # pyinstaller --noconsole exec_main.py 
 ------------------------------------------
 
@@ -71,6 +71,26 @@ install python 3.9.9
 pip install cx-freeze
 python -m pip install --upgrade pip
 cxfreeze -c hello.py --target-dir dist
+
+--------------------erro UPX------------------------------
+Pode haver um problema com o UPX, pois ele pode não ser baixado, então o primeiro passo que você deve fazer é baixar o UPX aqui UPX oficial
+depois de baixado, extraia-o para uma pasta específica. Lá você encontrará o arquivo .exe então agora no mesmo diretório é só abrir o cmd e rodar o comando do pyinstaller
+
+pyinstaller --onefile pythonScriptName.py
+
+
+verificar se já tem a pasta do UPX. Caso não: https://www.chinapyg.com/thread-144965-1-1.html
+https://www-tutorialexample-com.translate.goog/fix-pyinstaller-upx-is-not-available-error-pyinstaller-tutorial/?_x_tr_sl=en&_x_tr_tl=pt&_x_tr_hl=pt-BR&_x_tr_pto=sc
+descompactar dentro da pasta do projeto
+
+O diretório UPX, não o executável UPX, precisa ser especificado:
+por exemplo:
+
+pyinstaller myfile.py --upx-dir=..\upx391w -y --onefile
+ou
+pyinstaller main.py --key 123456 -n test -F -w --upx-dir f:\
+
+435 INFO: UPX not available.
 --------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------------------------- 
 # mapadecaixa.apply(lambda x: '3o. Agrupamento' if x.'3o. Agrupamento' == 'DUPLICATA' else '3o. Agrupamento', axis=1)
